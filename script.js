@@ -13,25 +13,21 @@ function goToInvitation(event) {
 
 // ================= نظام المتاهة والفيزياء الحقيقية =================
 const boardSize = 240;
-const step = 24; // حجم الخطوة متناسق مع حجم اللاعب
+const step = 24; 
 
 let groomPos = { x: 0, y: 0 };
-let bridePos = { x: 216, y: 216 }; // الزاوية المقابلة
+let bridePos = { x: 216, y: 216 }; 
 
-// مصفوفة الجدران المبنية هندسياً (زي المتاهة الحقيقية المقفولة اللي في الفيديو)
 const blocks = [
-    // جدران عمودية (Vertical)
     {x: 48, y: 0, w: 24, h: 96},
     {x: 120, y: 48, w: 24, h: 96},
     {x: 48, y: 144, w: 24, h: 96},
     {x: 168, y: 96, w: 24, h: 144},
-    // جدران أفقية (Horizontal)
     {x: 96, y: 48, w: 96, h: 24},
     {x: 0, y: 144, w: 96, h: 24},
     {x: 144, y: 144, w: 48, h: 2}
 ];
 
-// رسم جدران المتاهة في الـ DOM
 const board = document.getElementById('maze-board');
 blocks.forEach(b => {
     const blockEl = document.createElement('div');
@@ -51,12 +47,8 @@ function updatePositions() {
 }
 updatePositions();
 
-// دالة فحص التصادم الحقيقي (تمنع تخطي الجدران تماماً)
 function isColliding(nextX, nextY) {
-    // الخروج عن حدود الصندوق
     if (nextX < 0 || nextX >= boardSize || nextY < 0 || nextY >= boardSize) return true;
-    
-    // التداخل مع جدران المتاهة
     for (let b of blocks) {
         if (nextX < b.x + b.w && nextX + 20 > b.x && nextY < b.y + b.h && nextY + 20 > b.y) {
             return true; 
@@ -65,7 +57,6 @@ function isColliding(nextX, nextY) {
     return false;
 }
 
-// دالة الحركة عن طريق الأزرار أو الكيبورد
 function moveGroom(dir) {
     let nextX = groomPos.x;
     let nextY = groomPos.y;
@@ -83,7 +74,6 @@ function moveGroom(dir) {
     }
 }
 
-// دعم الكيبورد للكمبيوتر
 window.addEventListener('keydown', (e) => {
     if(document.getElementById('screen2').style.display === 'block') {
         if(e.key === 'ArrowUp' || e.key === 'w') moveGroom('up');
@@ -93,17 +83,20 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
-// التحقق من الوصول للعروسة
 function checkWin() {
     if (groomPos.x === bridePos.x && groomPos.y === bridePos.y) {
         document.getElementById('maze-success').style.display = 'flex';
     }
 }
 
-// إظهار بقية المحتوى بعد الفوز
+// تعديل الدالة لتعمل بنسبة 100% وتظهر المحتوى السفلي
 function revealLowerContent() {
     document.getElementById('maze-success').style.display = 'none';
-    document.getElementById('hidden-details').style.display = 'block';
+    const hiddenDetails = document.getElementById('hidden-details');
+    hiddenDetails.style.display = 'block'; // يظهر في الصفحة
+    setTimeout(() => {
+        hiddenDetails.style.opacity = '1'; // تفعيل أنيميشن الـ Fade
+    }, 10);
     startCountdown();
 }
 
