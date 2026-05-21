@@ -1,11 +1,11 @@
 :root {
-    --bg-dark: #1e355a; /* اللون الأزرق الفاخر المريح نفس صورتك بالضبط */
+    --bg-dark: #1e355a; 
     --card-bg: #14243f;
     --gold: #c5a880;
     --text-light: #ffffff;
     --text-muted: #8ba2c1;
     --heart: #ff477e;
-    --maze-line-color: #3b629b; /* لون الخطوط الزرقاء للمتاهة */
+    --maze-line-color: #3b629b; 
 }
 
 * {
@@ -21,7 +21,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- الظرف --- */
+/* --- الظرف الشاشة الأولى --- */
 #screen1 {
     width: 100vw;
     height: 100vh;
@@ -87,7 +87,7 @@ body {
     padding: 6px 12px; font-size: 0.7rem; cursor: pointer; margin-top: 15px;
 }
 
-/* --- محتوى الدعوة الرئيسي --- */
+/* --- الشاشة الثانية --- */
 #screen2 { display: none; padding: 40px 20px; }
 
 .container { max-width: 450px; margin: 0 auto; text-align: center; }
@@ -105,7 +105,7 @@ body {
 .hero-img-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
 .hero-img-container img { width: 100%; display: block; }
 
-/* البار العلوي للمتاهة */
+/* بار الصور */
 .maze-header-avatars {
     display: flex;
     justify-content: space-around;
@@ -113,45 +113,22 @@ body {
     max-width: 280px;
     margin: 0 auto 15px auto;
 }
-.avatar-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-.avatar-info span {
-    font-size: 0.65rem;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-}
-.header-circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 0 10px rgba(255,255,255,0.2);
-}
-.heart-connect {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--heart);
-    font-size: 0.75rem;
-}
+.avatar-info { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.avatar-info span { font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); }
+.header-circle { width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; }
+.heart-connect { display: flex; align-items: center; gap: 8px; color: var(--heart); font-size: 0.75rem; }
 
-/* روابط صور عشوائية أنيقة تناسب الفايبز من بنترست للمتاهة */
+/* صور بنترست السريعة والمستقرة أونلاين للمتاهة */
 .groom-img {
     background-image: url("https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=150");
-    background-size: cover;
-    background-position: center;
+    background-size: cover; background-position: center;
 }
 .bride-img {
     background-image: url("https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=150");
-    background-size: cover;
-    background-position: center;
+    background-size: cover; background-position: center;
 }
 
-/* تصميم بوكس المتاهة المظلم ذو الخطوط الرفيعة */
+/* صندوق اللعبة */
 .maze-section {
     position: relative;
     background: #111d31; 
@@ -177,15 +154,14 @@ body {
 
 .avatar-player, .avatar-target {
     position: absolute;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     border: 1.5px solid white;
     z-index: 5;
-    box-shadow: 0 0 8px rgba(255,255,255,0.4);
 }
 
-/* تصميم أزرار الموبايل الدائرية الزرقاء */
+/* الأزرار الدائرية الزرقاء */
 .controls {
     display: grid;
     grid-template-columns: repeat(3, 42px);
@@ -194,25 +170,13 @@ body {
     margin-top: 20px;
 }
 .btn-dir {
-    height: 42px;
-    background: #3b629b;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    height: 42px; background: #3b629b; border: none;
+    color: white; font-size: 1rem; border-radius: 50%; cursor: pointer;
 }
 .btn-dir:active { background: white; color: #1e355a; }
-.dpad-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--heart);
-    font-size: 0.9rem;
-}
+.dpad-center { display: flex; justify-content: center; align-items: center; color: var(--heart); }
 
-/* شاشة الفوز */
+/* شاشة الفوز بالتحدي */
 .success-overlay {
     display: none;
     position: absolute;
@@ -230,9 +194,17 @@ body {
     padding: 8px 16px; font-weight: 600; font-size: 0.75rem; cursor: pointer;
 }
 
-/* الجزء المخفي السفلي */
+/* الجزء السفلي (مخفي في البداية بأنيميشن) */
+#hidden-details {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    margin-top: 40px;
+}
+
+.section-divider-text { color: var(--gold); margin: 30px 0 10px; font-size: 0.75rem; letter-spacing: 2px; }
 .invited-header { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; margin-bottom: 20px; color: var(--gold); }
-.detail-row { margin: 10px 0; font-size: 0.95rem; }
+.detail-row { margin: 12px 0; font-size: 0.95rem; }
 .detail-row i { color: var(--gold); margin-right: 8px; }
 
 .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 30px 0; }

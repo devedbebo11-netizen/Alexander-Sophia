@@ -10,28 +10,29 @@ function goToInvitation(event) {
     window.scrollTo(0, 0);
 }
 
-// ================= نظام المتاهة الحقيقي =================
+// ================= نظام المتاهة المفتوح والسهل للحل =================
 const boardSize = 240;
 const step = 24; 
 
-let groomPos = { x: 0, y: 0 };       
-let bridePos = { x: 216, y: 216 };   
+// تم تعديل نقاط البداية والنهاية عشان تكون متناسقة داخل المربعات بالظبط
+let groomPos = { x: 2, y: 2 };       
+let bridePos = { x: 218, y: 218 };   
 
-// جدران المتاهة المتطابقة تماماً مع لقطة الشاشة لمنع التخطّي
+// جدران المتاهة المفتوحة (تمت مراجعتها عشان تفتح ممرات حقيقية وعريضة للحركة)
 const lines = [
     {x: 48, y: 0, w: 2, h: 48},
-    {x: 48, y: 96, w: 2, h: 96},
+    {x: 48, y: 96, w: 2, h: 72},
     {x: 96, y: 48, w: 2, h: 48},
-    {x: 96, y: 144, w: 2, h: 96},
-    {x: 144, y: 0, w: 2, h: 144},
-    {x: 192, y: 48, w: 2, h: 144},
+    {x: 96, y: 144, w: 2, h: 48},
+    {x: 144, y: 0, w: 2, h: 96},
+    {x: 192, y: 48, w: 2, h: 120},
     
     {x: 0, y: 48, w: 48, h: 2},
-    {x: 48, y: 96, w: 96, h: 2},
+    {x: 48, y: 96, w: 48, h: 2},
     {x: 96, y: 48, w: 48, h: 2},
-    {x: 0, y: 144, w: 96, h: 2},
+    {x: 0, y: 144, w: 48, h: 2},
     {x: 144, y: 144, w: 48, h: 2},
-    {x: 48, y: 192, w: 144, h: 2}
+    {x: 48, y: 192, w: 120, h: 2}
 ];
 
 const board = document.getElementById('maze-board');
@@ -46,22 +47,25 @@ lines.forEach(l => {
 });
 
 function updatePositions() {
-    document.getElementById('groom').style.left = (groomPos.x + 1) + 'px';
-    document.getElementById('groom').style.top = (groomPos.y + 1) + 'px';
-    document.getElementById('bride').style.left = (bridePos.x + 1) + 'px';
-    document.getElementById('bride').style.top = (bridePos.y + 1) + 'px';
+    document.getElementById('groom').style.left = groomPos.x + 'px';
+    document.getElementById('groom').style.top = groomPos.y + 'px';
+    document.getElementById('bride').style.left = bridePos.x + 'px';
+    document.getElementById('bride').style.top = bridePos.y + 'px';
 }
 updatePositions();
 
+// فحص تصادم دقيق ومرن يسمح بمرور العريس من الفتحات
 function isColliding(nextX, nextY) {
-    if (nextX < 0 || nextX >= boardSize || nextY < 0 || nextY >= boardSize) return true;
+    // منع الخروج برا الصندوق الأساسي للمتاهة
+    if (nextX < 0 || nextX + 20 > boardSize || nextY < 0 || nextY + 20 > boardSize) return true;
     
+    // فحص عدم تخطي الخطوط
     for (let l of lines) {
-        if (l.w > l.h) { 
+        if (l.w > l.h) { // خط أفقي
             if (nextX < l.x + l.w && nextX + 20 > l.x && nextY < l.y + 2 && nextY + 20 > l.y - 2) {
                 return true;
             }
-        } else { 
+        } else { // خط رأسي
             if (nextX < l.x + 2 && nextX + 20 > l.x - 2 && nextY < l.y + l.h && nextY + 20 > l.y) {
                 return true;
             }
@@ -87,6 +91,7 @@ function moveGroom(dir) {
     }
 }
 
+// تشغيل التحكم بأسهم الكيبورد للكمبيوتر فوراً
 window.addEventListener('keydown', (e) => {
     if(document.getElementById('screen2').style.display === 'block') {
         if(e.key === 'ArrowUp' || e.key === 'w') moveGroom('up');
@@ -97,20 +102,22 @@ window.addEventListener('keydown', (e) => {
 });
 
 function checkWin() {
-    if (groomPos.x === bridePos.x && groomPos.y === bridePos.y) {
+    // تصفير نسبة الخطأ في التلامس بين العريس والعروسة
+    if (Math.abs(groomPos.x - bridePos.x) < 10 && Math.abs(groomPos.y - bridePos.y) < 10) {
         document.getElementById('maze-success').style.display = 'flex';
     }
 }
 
-// فتح الجزء المخفي السفلي بنجاح وسلاسة بعد ضغط الزرار
+// دالة إظهار المحتوى المخفي بالكامل تحت المتاهة
 function revealLowerContent() {
     document.getElementById('maze-success').style.display = 'none';
     const hiddenDetails = document.getElementById('hidden-details');
     hiddenDetails.style.display = 'block';
-    setTimeout(() => { hiddenDetails.style.opacity = '1'; }, 10);
+    setTimeout(() => { hiddenDetails.style.opacity = '1'; }, 50);
     startCountdown();
 }
 
+// تشغيل العداد التنازلي
 function startCountdown() {
     const weddingDate = new Date("August 13, 2026 18:00:00").getTime();
     const interval = setInterval(function() {
@@ -128,7 +135,7 @@ function startCountdown() {
 
         if (distance < 0) {
             clearInterval(interval);
-            document.getElementById("countdown-clock").innerHTML = "<div>The Celebration Has Begun!</div>";
+            document.getElementById("countdown-clock").innerHTML = "<div style='color:var(--gold)'>The Celebration Has Begun!</div>";
         }
     }, 1000);
 }
