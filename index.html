@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <!-- Google Fonts for Elegant Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #d4af37; /* Metallic Gold */
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-muted: #aaaaaa;
+            --heart: #e63946;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Decorative Background Elements */
+        .sparkles {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(212,175,55,0.05) 1%, transparent 70%);
+            z-index: 0;
+        }
+
+        /* --- SCREEN 1: 3D ENVELOPE --- */
+        #screen1 {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            perspective: 1000px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: #2c2c2c;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+
+        /* Envelope Flap */
+        .envelope-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #3d3d3d;
+            transform-origin: top;
+            transition: transform 0.4s ease 0.2s;
+            z-index: 3;
+        }
+
+        /* Opened state for flap */
+        .envelope-wrapper.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* Envelope Body Pocket */
+        .envelope-box {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #232323;
+            border-left: 3px solid var(--primary);
+            border-right: 3px solid var(--primary);
+            border-bottom: 3px solid var(--primary);
+            z-index: 2;
+        }
+
+        /* Heart Button Trigger */
+        .heart-btn {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: var(--heart);
+            z-index: 4;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+        }
+        .heart-btn:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        /* Inside Letter Card */
+        .letter-card {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            z-index: 1;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+            box-shadow: inset 0 0 15px rgba(212,175,55,0.2);
+        }
+
+        .envelope-wrapper.open .letter-card {
+            transform: translateY(-130px);
+            z-index: 3;
+        }
+
+        .letter-card h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .next-screen-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--text-light);
+            padding: 6px 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .next-screen-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* --- SCREEN 2: MAIN INVITATION DETAILS --- */
+        #screen2 {
+            display: none;
+            width: 100%;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Top Callout Names */
+        .main-names {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(212,175,55,0.4);
+        }
+        @media (max-width: 600px) {
+            .main-names { font-size: 1.8rem; }
+        }
+
+        /* Date Badge Box */
+        .date-box {
+            display: inline-block;
+            border: 2px solid var(--primary);
+            padding: 10px 25px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            border-radius: 4px;
+            background: rgba(212,175,55,0.05);
+        }
+
+        /* Couple Image Card */
+        .hero-img-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 25px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 3px solid #2a2a2a;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+        }
+        .hero-img-container img {
+            width: 100%;
+            display: block;
+            filter: sepia(20%) grayscale(10%);
+        }
+
+        .romantic-quote {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
+            color: #ffccd5;
+            margin-bottom: 60px;
+            line-height: 1.4;
+        }
+
+        /* --- MAZE GAME SECTION --- */
+        .maze-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 60px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .maze-title {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .maze-container {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            background: #111;
+            margin: 0 auto 20px auto;
+            border: 4px solid var(--primary);
+        }
+        
+        /* Grid-based maze layout simplified */
+        .maze-wall {
+            position: absolute;
+            background-color: #333;
+        }
+        
+        /* Avatars */
+        .avatar {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: all 0.1s linear;
+        }
+        #groom { z-index: 10; background: #3a86ff; }
+        #bride { background: #ff007f; }
+
+        /* Maze Game Controllers for Mobile */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 50px);
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .btn-dir {
+            height: 50px;
+            background: #2a2a2a;
+            border: 1px solid var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .btn-dir:active { background: var(--primary); color: #000; }
+
+        /* Success Card overlay inside maze section */
+        .success-overlay {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .success-overlay h3 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* --- LOWER INVITATION CONTENTS --- */
+        .invited-header {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        /* Countdown Grid Layout */
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto 60px auto;
+        }
+        .count-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #2a2a2a;
+            padding: 15px 5px;
+            border-radius: 8px;
+        }
+        .count-item span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .count-item label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Photo Gallery Area */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 60px;
+        }
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Chronological Timeline Section */
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+            padding-left: 30px;
+            text-align: left;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 5px;
+            width: 2px;
+            height: 100%;
+            background: #333;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Final Call and CTA Blocks */
+        .together-forever {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .action-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin: 30px auto 0 auto;
+        }
+        .btn-action {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #1f1f1f;
+            border: 1px solid var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(212,175,55,0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sparkles"></div>
+
+    <!-- ================= SCREEN 1: THE ENVELOPE ================= -->
+    <section id="screen1">
+        <div class="envelope-wrapper" id="envelope">
+            <div class="envelope-box"></div>
+            <i class="fa-solid fa-heart heart-btn" id="open-btn" onclick="openEnvelope(event)"></i>
+            <div class="letter-card">
+                <h2>Alexander & Sophia</h2>
+                <p style="font-size:0.85rem; color:var(--text-muted);">You are warmly invited to celebrate our beautiful love journey.</p>
+                <button class="next-screen-btn" onclick="goToInvitation(event)">Open Invitation</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SCREEN 2: MAIN DYNAMIC CONTENT ================= -->
+    <section id="screen2">
+        <div class="container">
+            
+            <h1 class="main-names">Alexander & Sophia</h1>
+            
+            <!-- Date Display Square -->
+            <div class="date-box">
+                SEPTEMBER 13, 2026
+            </div>
+
+            <!-- Couple Hero Photo Area -->
+            <div class="hero-img-container">
+                <!-- Placeholder Image (Replace src URL with your actual image later) -->
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600&auto=format&fit=crop" alt="The Couple">
+            </div>
+
+            <p class="romantic-quote">"Two hearts connected by a perfect destiny, stepping into forever side by side."</p>
+
+            <!-- Interactive Mini Maze Game Block -->
+            <div class="maze-section">
+                <div id="maze-intro">
+                    <h2 class="maze-title">Help him find her!</h2>
+                    <div class="maze-container" id="maze-board">
+                        <div id="groom" class="avatar">🤵</div>
+                        <div id="bride" class="avatar">👰</div>
+                    </div>
+                    
+                    <!-- D-Pad Controllers for Universal Devices -->
+                    <div class="controls">
+                        <div></div>
+                        <button class="btn-dir" onclick="moveGroom('up')"><i class="fa-solid fa-chevron-up"></i></button>
+                        <div></div>
+                        <button class="btn-dir" onclick="moveGroom('left')"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="btn-dir" onclick="moveGroom('down')"><i class="fa-solid fa-chevron-down"></i></button>
+                        <button class="btn-dir" onclick="moveGroom('right')"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+
+                <div id="maze-success" class="success-overlay">
+                    <h3>I Found Her!</h3>
+                    <p style="margin-bottom: 15px; color: var(--text-muted);">True love always finds its ultimate path.</p>
+                    <button class="next-screen-btn" onclick="revealLowerContent()">Continue</button>
+                </div>
+            </div>
+
+            <!-- Lockable Lower content area until game complete -->
+            <div id="hidden-details" style="display: none; opacity: 0; transition: opacity 0.8s ease;">
+                
+                <h2 class="invited-header">You Are Invited!</h2>
+
+                <!-- Live Countdown Clock Panel -->
+                <div class="countdown" id="countdown-clock">
+                    <div class="count-item"><span id="days">00</span><label>Days</label></div>
+                    <div class="count-item"><span id="hours">00</span><label>Hours</label></div>
+                    <div class="count-item"><span id="minutes">00</span><label>Mins</label></div>
+                    <div class="count-item"><span id="seconds">00</span><label>Secs</label></div>
+                </div>
+
+                <!-- Shared Story Gallery Matrix -->
+                <div class="gallery-grid">
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=400&auto=format&fit=crop" alt="Gallery 1"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400&auto=format&fit=crop" alt="Gallery 2"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop" alt="Gallery 3"></div>
+                </div>
+
+                <!-- Love Chronology Roadmap -->
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">2023</div>
+                        <div class="timeline-desc">The memorable day our stars crossed and we first locked eyes.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-desc">Shared endless adventures and discovered a deep bond of love.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-desc">The beautiful promise under the night sky where she said YES.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2026</div>
+                        <div class="timeline-desc">The official day we tie our souls together eternally!</div>
+                    </div>
+                </div>
+
+                <div class="together-forever">Together Forever</div>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">We cannot wait to share our big day with you.</p>
+
+                <!-- Core Call to Actions Block -->
+                <div class="action-links">
+                    <!-- Location Open Trigger Link -->
+                    <a href="https://maps.google.com" target="_blank" class="btn-action">
+                        <i class="fa-solid fa-location-dot"></i> View Wedding Location
+                    </a>
+                    <!-- Direct WhatsApp Gateway Action -->
+                    <a href="https://wa.me/201234567890?text=I%20would%20love%20to%20attend%20your%20wedding!" target="_blank" class="btn-action" style="border-color: #25d366;">
+                        <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Confirm Attendance (RSVP)
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ================= ENGINE CONTROLLER MODULES (JS) ================= -->
+    <script>
+        // Envelope Mechanics
+        function openEnvelope(event) {
+            event.stopPropagation();
+            document.getElementById('envelope').classList.toggle('open');
+        }
+
+        function goToInvitation(event) {
+            event.stopPropagation();
+            document.getElementById('screen1').style.display = 'none';
+            document.getElementById('screen2').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // --- MINI MAZE LOGIC ENGINE ---
+        const boardSize = 240;
+        const step = 24;
+        // Game characters state coordinates
+        let groomPos = { x: 0, y: 0 };
+        let bridePos = { x: 216, y: 216 }; // Diagonal base corner
+
+        // Static Custom Walls Construction Matrix
+        const walls = [
+            {x: 48, y: 0, w: 24, h: 96},
+            {x: 120, y: 48, w: 96, h: 24},
+            {x: 0, y: 144, w: 144, h: 24},
+            {x: 168, y: 120, w: 24, h: 96}
+        ];
+
+        // Draw structural obstacles on initialization
+        const board = document.getElementById('maze-board');
+        walls.forEach(w => {
+            const wallEl = document.createElement('div');
+            wallEl.className = 'maze-wall';
+            wallEl.style.left = w.x + 'px';
+            wallEl.style.top = w.y + 'px';
+            wallEl.style.width = w.w + 'px';
+            wallEl.style.height = w.h + 'px';
+            board.appendChild(wallEl);
+        });
+
+        function updatePositions() {
+            document.getElementById('groom').style.left = groomPos.x + 'px';
+            document.getElementById('groom').style.top = groomPos.y + 'px';
+            document.getElementById('bride').style.left = bridePos.x + 'px';
+            document.getElementById('bride').style.top = bridePos.y + 'px';
+        }
+        updatePositions();
+
+        // Helper check wrapper evaluating collision metrics
+        function checkCollision(nextX, nextY) {
+            if (nextX < 0 || nextX >= boardSize || nextY < 0 || nextY >= boardSize) return true;
+            for (let wall of walls) {
+                if (nextX >= wall.x && nextX < wall.x + wall.w && nextY >= wall.y && nextY < wall.y + wall.h) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Action routing execution handle
+        function moveGroom(dir) {
+            let nextX = groomPos.x;
+            let nextY = groomPos.y;
+
+            if (dir === 'up') nextY -= step;
+            if (dir === 'down') nextY += step;
+            if (dir === 'left') nextX -= step;
+            if (dir === 'right') nextX += step;
+
+            if (!checkCollision(nextX, nextY)) {
+                groomPos.x = nextX;
+                groomPos.y = nextY;
+                updatePositions();
+                checkWinCondition();
+            }
+        }
+
+        // Keyboard support for Desktop users
+        window.addEventListener('keydown', (e) => {
+            if(document.getElementById('screen2').style.display === 'block') {
+                if(e.key === 'ArrowUp') moveGroom('up');
+                if(e.key === 'ArrowDown') moveGroom('down');
+                if(e.key === 'ArrowLeft') moveGroom('left');
+                if(e.key === 'ArrowRight') moveGroom('right');
+            }
+        });
+
+        function checkWinCondition() {
+            if (groomPos.x === bridePos.x && groomPos.y === bridePos.y) {
+                document.getElementById('maze-intro').style.display = 'none';
+                document.getElementById('maze-success').style.display = 'block';
+            }
+        }
+
+        function revealLowerContent() {
+            const hiddenSec = document.getElementById('hidden-details');
+            hiddenSec.style.display = 'block';
+            setTimeout(() => { hiddenSec.style.opacity = '1'; }, 50);
+            startCountdown();
+        }
+
+        // --- TIMER ENGINE MOUNT ---
+        function startCountdown() {
+            // Target Event Date (Set dynamically)
+            const weddingDate = new Date("September 13, 2026 18:00:00").getTime();
+
+            const interval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+                if (distance < 0) {
+                    clearInterval(interval);
+                    document.getElementById("countdown-clock").innerHTML = "<div style='grid-column: 1/-1; font-size:1.5rem; color:var(--primary);'>The Celebration Has Begun!</div>";
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
