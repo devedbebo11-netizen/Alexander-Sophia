@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Invitation</title>
-    <!-- Google Fonts for Elegant Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Wedding Invitation - Joyful & Interactive</title>
+    <!-- Google Fonts: Elegant and Joyful Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #d4af37; /* Metallic Gold */
-            --bg-dark: #121212;
-            --card-bg: #1e1e1e;
-            --text-light: #f5f5f5;
-            --text-muted: #aaaaaa;
-            --heart: #e63946;
+            --primary: #FF69B4; /* Hot Pink - Bright & Cheerful */
+            --primary-light: #FFC0CB; /* Pink Accent */
+            --bg-dark: #FFFFFF; /* Pure White - Bright & Clean */
+            --card-bg: #F8F9FA; /* Light Gray - Soft contrast */
+            --text-light: #333333; /* Dark Gray - Clear text on white */
+            --text-muted: #777777; /* Muted Gray */
+            --heart: #FF007F; /* Livelier Heart Red/Pink */
+            --gold: #D4AF37; /* Metallic Gold Accent */
         }
 
         * {
@@ -26,20 +28,23 @@
         }
 
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Decorative Background Elements */
-        .sparkles {
+        /* Confetti Background Elements - High Joy Factor */
+        .confetti {
             position: fixed;
             width: 100vw;
             height: 100vh;
             pointer-events: none;
-            background: radial-gradient(circle, rgba(212,175,55,0.05) 1%, transparent 70%);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 105, 180, 0.3) 1%, transparent 2%),
+                radial-gradient(circle at 80% 60%, rgba(255, 192, 203, 0.3) 1%, transparent 2%),
+                radial-gradient(circle at 40% 90%, rgba(212, 175, 55, 0.2) 1%, transparent 2%);
             z-index: 0;
         }
 
@@ -53,15 +58,15 @@
             position: relative;
             z-index: 10;
             perspective: 1000px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFFFFF 100%); /* Soft Pinkish Wash */
         }
 
         .envelope-wrapper {
             position: relative;
             width: 300px;
             height: 200px;
-            background-color: #2c2c2c;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            background-color: #FFFFFF;
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.2);
             cursor: pointer;
             transform-style: preserve-3d;
             transition: transform 0.5s ease;
@@ -77,7 +82,7 @@
             height: 0;
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
-            border-top: 100px solid #3d3d3d;
+            border-top: 100px solid #FFE4E1; /* Muted Pink Flap */
             transform-origin: top;
             transition: transform 0.4s ease 0.2s;
             z-index: 3;
@@ -95,7 +100,7 @@
             bottom: 0;
             width: 100%;
             height: 100%;
-            background-color: #232323;
+            background-color: #FFFFFF;
             border-left: 3px solid var(--primary);
             border-right: 3px solid var(--primary);
             border-bottom: 3px solid var(--primary);
@@ -108,11 +113,11 @@
             top: 40%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--heart);
             z-index: 4;
             transition: transform 0.3s ease;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 4px 10px rgba(255, 0, 127, 0.4));
         }
         .heart-btn:hover {
             transform: translate(-50%, -50%) scale(1.15);
@@ -125,9 +130,9 @@
             left: 10px;
             width: 280px;
             height: 180px;
-            background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
-            border: 1px solid var(--primary);
-            border-radius: 5px;
+            background: linear-gradient(145deg, #FFFFFF, #FFF5F8);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
             z-index: 1;
             transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
@@ -136,40 +141,41 @@
             align-items: center;
             padding: 15px;
             text-align: center;
-            box-shadow: inset 0 0 15px rgba(212,175,55,0.2);
+            box-shadow: inset 0 0 15px rgba(255, 105, 180, 0.1);
         }
 
         .envelope-wrapper.open .letter-card {
-            transform: translateY(-130px);
+            transform: translateY(-140px);
             z-index: 3;
         }
 
         .letter-card h2 {
             font-family: 'Great Vibes', cursive;
             color: var(--primary);
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
         }
 
         .next-screen-btn {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--text-light);
-            padding: 6px 15px;
-            font-size: 0.8rem;
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            font-size: 0.85rem;
             cursor: pointer;
             margin-top: 10px;
-            border-radius: 20px;
+            border-radius: 25px;
             transition: all 0.3s ease;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
         }
 
         .next-screen-btn:hover {
-            background: var(--primary);
-            color: #000;
-            box-shadow: 0 0 10px var(--primary);
+            background: #FF007F; /* Livelier Pink */
+            box-shadow: 0 6px 12px rgba(255, 105, 180, 0.4);
         }
 
         /* --- SCREEN 2: MAIN INVITATION DETAILS --- */
@@ -193,7 +199,7 @@
             font-size: 3rem;
             color: var(--primary);
             margin-bottom: 15px;
-            text-shadow: 0 0 15px rgba(212,175,55,0.4);
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
         }
         @media (max-width: 600px) {
             .main-names { font-size: 1.8rem; }
@@ -208,8 +214,8 @@
             letter-spacing: 2px;
             font-weight: 600;
             margin-bottom: 40px;
-            border-radius: 4px;
-            background: rgba(212,175,55,0.05);
+            border-radius: 25px;
+            background: rgba(255, 105, 180, 0.05);
         }
 
         /* Couple Image Card */
@@ -219,31 +225,31 @@
             margin: 0 auto 25px auto;
             border-radius: 15px;
             overflow: hidden;
-            border: 3px solid #2a2a2a;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+            border: 4px solid var(--primary-light);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.2);
         }
         .hero-img-container img {
             width: 100%;
             display: block;
-            filter: sepia(20%) grayscale(10%);
+            filter: contrast(110%);
         }
 
         .romantic-quote {
             font-family: 'Great Vibes', cursive;
             font-size: 2.2rem;
-            color: #ffccd5;
+            color: #FF1493; /* Cheerful Romantic Pink */
             margin-bottom: 60px;
             line-height: 1.4;
         }
 
-        /* --- MAZE GAME SECTION --- */
+        /* --- COMPLEX MAZE GAME SECTION --- */
         .maze-section {
             background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 60px;
-            border: 1px solid #333;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 2px solid #EEE;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
         }
         .maze-title {
             font-family: 'Cinzel Decorative', serif;
@@ -256,15 +262,17 @@
             position: relative;
             width: 240px;
             height: 240px;
-            background: #111;
+            background: #FFFFFF;
             margin: 0 auto 20px auto;
-            border: 4px solid var(--primary);
+            border: 6px solid var(--primary);
+            overflow: hidden;
         }
         
-        /* Grid-based maze layout simplified */
-        .maze-wall {
+        /* Line-based maze layout complexified */
+        .maze-line {
             position: absolute;
-            background-color: #333;
+            background-color: var(--primary);
+            transition: all 0.2s ease;
         }
         
         /* Avatars */
@@ -279,8 +287,8 @@
             font-size: 0.9rem;
             transition: all 0.1s linear;
         }
-        #groom { z-index: 10; background: #3a86ff; }
-        #bride { background: #ff007f; }
+        #groom { z-index: 10; background: #3a86ff; border: 2px solid #FFF; }
+        #bride { background: #ff007f; border: 2px solid #FFF; }
 
         /* Maze Game Controllers for Mobile */
         .controls {
@@ -292,14 +300,15 @@
         }
         .btn-dir {
             height: 50px;
-            background: #2a2a2a;
-            border: 1px solid var(--primary);
+            background: var(--primary);
+            border: none;
             color: white;
             font-size: 1.2rem;
-            border-radius: 8px;
+            border-radius: 50%;
             cursor: pointer;
+            box-shadow: 0 4px 8px rgba(255, 105, 180, 0.3);
         }
-        .btn-dir:active { background: var(--primary); color: #000; }
+        .btn-dir:active { background: #FF007F; }
 
         /* Success Card overlay inside maze section */
         .success-overlay {
@@ -320,6 +329,7 @@
             font-size: 2.2rem;
             margin-bottom: 30px;
             letter-spacing: 2px;
+            color: var(--gold); /* Touch of gold for invited header */
         }
 
         /* Countdown Grid Layout */
@@ -331,10 +341,10 @@
             margin: 0 auto 60px auto;
         }
         .count-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid #2a2a2a;
+            background: rgba(255,105,180,0.05);
+            border: 1px solid var(--primary-light);
             padding: 15px 5px;
-            border-radius: 8px;
+            border-radius: 12px;
         }
         .count-item span {
             display: block;
@@ -358,8 +368,8 @@
         .gallery-item {
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #333;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 2px solid #EEE;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         .gallery-item img {
             width: 100%;
@@ -387,7 +397,7 @@
             top: 5px;
             width: 2px;
             height: 100%;
-            background: #333;
+            background: #EEE;
         }
         .timeline-item {
             position: relative;
@@ -418,7 +428,7 @@
         .together-forever {
             font-family: 'Great Vibes', cursive;
             font-size: 3.5rem;
-            color: var(--primary);
+            color: var(--gold); /* Gold Forever */
             margin-bottom: 4px;
         }
 
@@ -435,17 +445,18 @@
             align-items: center;
             gap: 10px;
             padding: 12px;
-            background: #1f1f1f;
-            border: 1px solid var(--primary);
-            color: white;
+            background: #FFFFFF;
+            border: 2px solid var(--gold);
+            color: var(--gold);
             text-decoration: none;
             border-radius: 25px;
             font-weight: 600;
             font-size: 0.95rem;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(212, 175, 85, 0.2);
         }
         .btn-action:hover {
-            background: var(--primary);
+            background: var(--gold);
             color: #000;
             box-shadow: 0 5px 15px rgba(212,175,55,0.3);
         }
@@ -453,7 +464,7 @@
 </head>
 <body>
 
-    <div class="sparkles"></div>
+    <div class="confetti"></div>
 
     <!-- ================= SCREEN 1: THE ENVELOPE ================= -->
     <section id="screen1">
@@ -487,7 +498,7 @@
 
             <p class="romantic-quote">"Two hearts connected by a perfect destiny, stepping into forever side by side."</p>
 
-            <!-- Interactive Mini Maze Game Block -->
+            <!-- Interactive Complex Maze Game Block -->
             <div class="maze-section">
                 <div id="maze-intro">
                     <h2 class="maze-title">Help him find her!</h2>
@@ -564,7 +575,7 @@
                         <i class="fa-solid fa-location-dot"></i> View Wedding Location
                     </a>
                     <!-- Direct WhatsApp Gateway Action -->
-                    <a href="https://wa.me/201234567890?text=I%20would%20love%20to%20attend%20your%20wedding!" target="_blank" class="btn-action" style="border-color: #25d366;">
+                    <a href="https://wa.me/201234567890?text=I%20would%20love%20to%20attend%20your%20wedding!" target="_blank" class="btn-action" style="border-color: #25d366; color: #25d366;">
                         <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Confirm Attendance (RSVP)
                     </a>
                 </div>
@@ -596,24 +607,36 @@
         let groomPos = { x: 0, y: 0 };
         let bridePos = { x: 216, y: 216 }; // Diagonal base corner
 
-        // Static Custom Walls Construction Matrix
-        const walls = [
-            {x: 48, y: 0, w: 24, h: 96},
-            {x: 120, y: 48, w: 96, h: 24},
-            {x: 0, y: 144, w: 144, h: 24},
-            {x: 168, y: 120, w: 24, h: 96}
+        // static Custom Lines Construction Matrix (Much More Complex)
+        const lines = [
+            // Internal maze walls/lines for complexification
+            {x: 48, y: 0, w: 2, h: 48},
+            {x: 48, y: 96, w: 2, h: 48},
+            {x: 96, y: 48, w: 2, h: 144},
+            {x: 144, y: 0, w: 2, h: 96},
+            {x: 144, y: 144, w: 2, h: 96},
+            {x: 192, y: 48, w: 2, h: 48},
+            {x: 192, y: 144, w: 2, h: 48},
+            // Horizontal lines
+            {x: 0, y: 48, w: 48, h: 2},
+            {x: 96, y: 48, w: 96, h: 2},
+            {x: 48, y: 96, w: 48, h: 2},
+            {x: 144, y: 96, w: 96, h: 2},
+            {x: 0, y: 144, w: 96, h: 2},
+            {x: 144, y: 144, w: 48, h: 2},
+            {x: 48, y: 192, w: 144, h: 2}
         ];
 
         // Draw structural obstacles on initialization
         const board = document.getElementById('maze-board');
-        walls.forEach(w => {
-            const wallEl = document.createElement('div');
-            wallEl.className = 'maze-wall';
-            wallEl.style.left = w.x + 'px';
-            wallEl.style.top = w.y + 'px';
-            wallEl.style.width = w.w + 'px';
-            wallEl.style.height = w.h + 'px';
-            board.appendChild(wallEl);
+        lines.forEach(l => {
+            const lineEl = document.createElement('div');
+            lineEl.className = 'maze-line';
+            lineEl.style.left = l.x + 'px';
+            lineEl.style.top = l.y + 'px';
+            lineEl.style.width = l.w + 'px';
+            lineEl.style.height = l.h + 'px';
+            board.appendChild(lineEl);
         });
 
         function updatePositions() {
@@ -627,8 +650,8 @@
         // Helper check wrapper evaluating collision metrics
         function checkCollision(nextX, nextY) {
             if (nextX < 0 || nextX >= boardSize || nextY < 0 || nextY >= boardSize) return true;
-            for (let wall of walls) {
-                if (nextX >= wall.x && nextX < wall.x + wall.w && nextY >= wall.y && nextY < wall.y + wall.h) {
+            for (let line of lines) {
+                if (nextX >= line.x - 20 && nextX <= line.x + line.w - 4 && nextY >= line.y - 20 && nextY <= line.y + line.h - 4) {
                     return true;
                 }
             }
