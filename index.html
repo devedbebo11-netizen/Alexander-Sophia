@@ -25,7 +25,6 @@
         <div class="container">
             <p class="top-tag">WEDDING INVITATION</p>
             <div class="monogram">A & S</div>
-            <p class="sub-tag">Two hearts, one destiny</p>
             
             <h1 class="main-names">AHMED & SHAHD</h1>
             <p class="promise-text">A promise sealed with love and time,</p>
@@ -37,29 +36,41 @@
             </div>
 
             <div class="hero-img-container">
-                <img src="https://picsum.photos/600/400?random=1" alt="The Couple">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000" alt="The Couple">
             </div>
 
-            <p class="section-divider-text">A JOURNEY OF LOVE</p>
-            <h2 class="maze-title">HELP HIM FIND HER</h2>
-            <p class="maze-instruction">Guide the groom through the maze to reach his bride</p>
+            <div class="maze-header-avatars">
+                <div class="avatar-info">
+                    <div class="header-circle groom-img"></div>
+                    <span>AHMED</span>
+                </div>
+                <div class="heart-connect">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <i class="fa-solid fa-heart"></i>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="avatar-info">
+                    <div class="header-circle bride-img"></div>
+                    <span>SHAHD</span>
+                </div>
+            </div>
 
             <div class="maze-section">
                 <div id="maze-intro">
                     <div class="maze-container" id="maze-board">
-                        <div id="groom" class="avatar-player"></div>
-                        <div id="bride" class="avatar-target"></div>
+                        <div id="groom" class="avatar-player groom-img"></div>
+                        <div id="bride" class="avatar-target bride-img"></div>
                     </div>
                     
                     <div class="controls">
                         <div></div>
-                        <button class="btn-dir" onclick="moveGroom('up')"><i class="fa-solid fa-caret-up"></i></button>
+                        <button class="btn-dir" onclick="moveGroom('up')"><i class="fa-solid fa-arrow-up"></i></button>
                         <div></div>
-                        <button class="btn-dir" onclick="moveGroom('left')"><i class="fa-solid fa-caret-left"></i></button>
-                        <div class="dpad-center"></div>
-                        <button class="btn-dir" onclick="moveGroom('right')"><i class="fa-solid fa-caret-right"></i></button>
+                        <button class="btn-dir" onclick="moveGroom('left')"><i class="fa-solid fa-arrow-left"></i></button>
+                        <div class="dpad-center"><i class="fa-solid fa-heart"></i></div>
+                        <button class="btn-dir" onclick="moveGroom('right')"><i class="fa-solid fa-arrow-right"></i></button>
                         <div></div>
-                        <button class="btn-dir" onclick="moveGroom('down')"><i class="fa-solid fa-caret-down"></i></button>
+                        <button class="btn-dir" onclick="moveGroom('down')"><i class="fa-solid fa-arrow-down"></i></button>
                         <div></div>
                     </div>
                 </div>
@@ -83,8 +94,6 @@
                     <div class="detail-row"><i class="fa-solid fa-location-dot"></i> Gardenia Hall</div>
                 </div>
 
-                <p class="countdown-title">The hours draw closer, until we say "I DO"</p>
-                
                 <div class="countdown" id="countdown-clock">
                     <div class="count-item"><span id="days">00</span><label>Days</label></div>
                     <div class="count-item"><span id="hours">00</span><label>Hours</label></div>
@@ -93,46 +102,15 @@
                 </div>
 
                 <p class="section-divider-text">OUR MEMORIES</p>
-                <h2 class="gallery-title">GALLERY</h2>
-                
                 <div class="gallery-grid">
-                    <div class="gallery-item"><img src="https://picsum.photos/400/300?random=2" alt="1"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/400/300?random=3" alt="2"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/400/300?random=4" alt="3"></div>
-                    <div class="gallery-item"><img src="https://picsum.photos/400/300?random=5" alt="4"></div>
-                </div>
-
-                <blockquote class="mid-quote">"Two hearts have found each other." <br><span style="font-size:1rem; color:var(--gold);">— Ahmed & Shahd</span></blockquote>
-
-                <p class="section-divider-text">OUR LOVE STORY</p>
-                <h2 class="timeline-title">TIMELINE</h2>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-year">2023</div>
-                        <div class="timeline-header">First Meeting</div>
-                        <div class="timeline-desc">Under the stars, our paths crossed and a beautiful story began.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">2024</div>
-                        <div class="timeline-header">The Proposal</div>
-                        <div class="timeline-desc">With a ring and a promise, she whispered the most beautiful "Yes".</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">2025</div>
-                        <div class="timeline-header">Engagement Party</div>
-                        <div class="timeline-desc">Surrounded by love and family, we celebrated our official bond.</div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-year">2026</div>
-                        <div class="timeline-header">The Wedding</div>
-                        <div class="timeline-desc">The day we step together into our forever.</div>
-                    </div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=400" alt="1"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400" alt="2"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400" alt="3"></div>
+                    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400" alt="4"></div>
                 </div>
 
                 <h1 class="together-forever">Together</h1>
                 <p class="together-sub">AHMED & SHAHD</p>
-                <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:40px;">We cannot wait to celebrate this love with you.</p>
 
                 <div class="action-links">
                     <a href="https://maps.google.com" target="_blank" class="btn-action"><i class="fa-solid fa-location-dot"></i> VIEW WEDDING LOCATION</a>

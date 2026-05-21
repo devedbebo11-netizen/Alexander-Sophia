@@ -1,4 +1,3 @@
-// ميكانيكية فتح الظرف
 function openEnvelope(event) {
     event.stopPropagation();
     document.getElementById('envelope').classList.toggle('open');
@@ -11,47 +10,61 @@ function goToInvitation(event) {
     window.scrollTo(0, 0);
 }
 
-// ================= نظام المتاهة والفيزياء الحقيقية =================
+// ================= نظام المتاهة الحقيقي =================
 const boardSize = 240;
 const step = 24; 
 
-let groomPos = { x: 0, y: 0 };
-let bridePos = { x: 216, y: 216 }; 
+let groomPos = { x: 0, y: 0 };       
+let bridePos = { x: 216, y: 216 };   
 
-const blocks = [
-    {x: 48, y: 0, w: 24, h: 96},
-    {x: 120, y: 48, w: 24, h: 96},
-    {x: 48, y: 144, w: 24, h: 96},
-    {x: 168, y: 96, w: 24, h: 144},
-    {x: 96, y: 48, w: 96, h: 24},
-    {x: 0, y: 144, w: 96, h: 24},
-    {x: 144, y: 144, w: 48, h: 2}
+// جدران المتاهة المتطابقة تماماً مع لقطة الشاشة لمنع التخطّي
+const lines = [
+    {x: 48, y: 0, w: 2, h: 48},
+    {x: 48, y: 96, w: 2, h: 96},
+    {x: 96, y: 48, w: 2, h: 48},
+    {x: 96, y: 144, w: 2, h: 96},
+    {x: 144, y: 0, w: 2, h: 144},
+    {x: 192, y: 48, w: 2, h: 144},
+    
+    {x: 0, y: 48, w: 48, h: 2},
+    {x: 48, y: 96, w: 96, h: 2},
+    {x: 96, y: 48, w: 48, h: 2},
+    {x: 0, y: 144, w: 96, h: 2},
+    {x: 144, y: 144, w: 48, h: 2},
+    {x: 48, y: 192, w: 144, h: 2}
 ];
 
 const board = document.getElementById('maze-board');
-blocks.forEach(b => {
-    const blockEl = document.createElement('div');
-    blockEl.className = 'maze-block';
-    blockEl.style.left = b.x + 'px';
-    blockEl.style.top = b.y + 'px';
-    blockEl.style.width = b.w + 'px';
-    blockEl.style.height = b.h + 'px';
-    board.appendChild(blockEl);
+lines.forEach(l => {
+    const lineEl = document.createElement('div');
+    lineEl.className = 'maze-line';
+    lineEl.style.left = l.x + 'px';
+    lineEl.style.top = l.y + 'px';
+    lineEl.style.width = l.w + 'px';
+    lineEl.style.height = l.h + 'px';
+    board.appendChild(lineEl);
 });
 
 function updatePositions() {
-    document.getElementById('groom').style.left = groomPos.x + 'px';
-    document.getElementById('groom').style.top = groomPos.y + 'px';
-    document.getElementById('bride').style.left = bridePos.x + 'px';
-    document.getElementById('bride').style.top = bridePos.y + 'px';
+    document.getElementById('groom').style.left = (groomPos.x + 1) + 'px';
+    document.getElementById('groom').style.top = (groomPos.y + 1) + 'px';
+    document.getElementById('bride').style.left = (bridePos.x + 1) + 'px';
+    document.getElementById('bride').style.top = (bridePos.y + 1) + 'px';
 }
 updatePositions();
 
 function isColliding(nextX, nextY) {
     if (nextX < 0 || nextX >= boardSize || nextY < 0 || nextY >= boardSize) return true;
-    for (let b of blocks) {
-        if (nextX < b.x + b.w && nextX + 20 > b.x && nextY < b.y + b.h && nextY + 20 > b.y) {
-            return true; 
+    
+    for (let l of lines) {
+        if (l.w > l.h) { 
+            if (nextX < l.x + l.w && nextX + 20 > l.x && nextY < l.y + 2 && nextY + 20 > l.y - 2) {
+                return true;
+            }
+        } else { 
+            if (nextX < l.x + 2 && nextX + 20 > l.x - 2 && nextY < l.y + l.h && nextY + 20 > l.y) {
+                return true;
+            }
         }
     }
     return false;
@@ -89,25 +102,20 @@ function checkWin() {
     }
 }
 
-// تعديل الدالة لتعمل بنسبة 100% وتظهر المحتوى السفلي
+// فتح الجزء المخفي السفلي بنجاح وسلاسة بعد ضغط الزرار
 function revealLowerContent() {
     document.getElementById('maze-success').style.display = 'none';
     const hiddenDetails = document.getElementById('hidden-details');
-    hiddenDetails.style.display = 'block'; // يظهر في الصفحة
-    setTimeout(() => {
-        hiddenDetails.style.opacity = '1'; // تفعيل أنيميشن الـ Fade
-    }, 10);
+    hiddenDetails.style.display = 'block';
+    setTimeout(() => { hiddenDetails.style.opacity = '1'; }, 10);
     startCountdown();
 }
 
-// ================= العداد التنازلي الحقيقي =================
 function startCountdown() {
     const weddingDate = new Date("August 13, 2026 18:00:00").getTime();
-
     const interval = setInterval(function() {
         const now = new Date().getTime();
         const distance = weddingDate - now;
-
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -120,7 +128,7 @@ function startCountdown() {
 
         if (distance < 0) {
             clearInterval(interval);
-            document.getElementById("countdown-clock").innerHTML = "<div style='color:var(--gold)'>The Celebration Has Begun!</div>";
+            document.getElementById("countdown-clock").innerHTML = "<div>The Celebration Has Begun!</div>";
         }
     }, 1000);
 }
