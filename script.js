@@ -10,88 +10,113 @@ function goToInvitation(event) {
     window.scrollTo(0, 0);
 }
 
-// ================= نظام المتاهة المفتوح والسهل للحل =================
-const boardSize = 240;
-const step = 24; 
-
-// تم تعديل نقاط البداية والنهاية عشان تكون متناسقة داخل المربعات بالظبط
-let groomPos = { x: 2, y: 2 };       
-let bridePos = { x: 218, y: 218 };   
-
-// جدران المتاهة المفتوحة (تمت مراجعتها عشان تفتح ممرات حقيقية وعريضة للحركة)
-const lines = [
-    {x: 48, y: 0, w: 2, h: 48},
-    {x: 48, y: 96, w: 2, h: 72},
-    {x: 96, y: 48, w: 2, h: 48},
-    {x: 96, y: 144, w: 2, h: 48},
-    {x: 144, y: 0, w: 2, h: 96},
-    {x: 192, y: 48, w: 2, h: 120},
-    
-    {x: 0, y: 48, w: 48, h: 2},
-    {x: 48, y: 96, w: 48, h: 2},
-    {x: 96, y: 48, w: 48, h: 2},
-    {x: 0, y: 144, w: 48, h: 2},
-    {x: 144, y: 144, w: 48, h: 2},
-    {x: 48, y: 192, w: 120, h: 2}
+// ================= نظام المتاهة الحقيقي الحسابي الصارم =================
+// مصفوفة الخرائط الـ 25 مربع المأخوذة من حيطان لقطة الشاشة الأصلية بالملي
+const mazeData = [
+    // الصف الأول (0 إلى 4)
+    { r:0, c:0, top:true,  bottom:false, left:true,  right:false },
+    { r:0, c:1, top:true,  bottom:true,  left:false, right:false },
+    { r:0, c:2, top:true,  bottom:false, left:false, right:true  },
+    { r:0, c:3, top:true,  bottom:false, left:true,  right:false },
+    { r:0, c:4, top:true,  bottom:false, left:false, right:true  },
+    // الصف الثاني (5 إلى 9)
+    { r:1, c:0, top:false, bottom:false, left:true,  right:true  },
+    { r:1, c:1, top:true,  bottom:false, left:true,  right:false },
+    { r:1, c:2, top:false, bottom:true,  left:false, right:false },
+    { r:1, c:3, top:false, bottom:true,  left:false, right:true  },
+    { r:1, c:4, top:false, bottom:false, left:true,  right:true  },
+    // الصف الثالث (10 إلى 14)
+    { r:2, c:0, top:false, bottom:true,  left:true,  right:false },
+    { r:2, c:1, top:false, bottom:true,  left:false, right:true  },
+    { r:2, c:2, top:true,  bottom:false, left:true,  right:false },
+    { r:2, c:3, top:true,  bottom:false, left:false, right:true  },
+    { r:2, c:4, top:false, bottom:true,  left:true,  right:true  },
+    // الصف الرابع (15 === 19)
+    { r:3, c:0, top:true,  bottom:false, left:true,  right:true  },
+    { r:3, c:1, top:true,  bottom:false, left:true,  right:false },
+    { r:3, c:2, top:false, bottom:true,  left:false, right:true  },
+    { r:3, c:3, top:false, bottom:false, left:true,  right:false },
+    { r:3, c:4, top:true,  bottom:false, left:false, right:true  },
+    // الصف الخامس (20 === 24)
+    { r:4, c:0, top:false, bottom:true,  left:true,  right:false },
+    { r:4, c:1, top:false, bottom:true,  left:false, right:true  },
+    { r:4, c:2, top:true,  bottom:true,  left:true,  right:false },
+    { r:4, c:3, top:false, bottom:true,  left:false, right:false },
+    { r:4, c:4, top:false, bottom:true,  left:false, right:true  }
 ];
 
+let groomGrid = { r: 0, c: 0 }; // يبدأ أعلى اليسار بالظبط
+let brideGrid = { r: 4, c: 4 }; // العروسة أسفل اليمين بالظبط
+
 const board = document.getElementById('maze-board');
-lines.forEach(l => {
-    const lineEl = document.createElement('div');
-    lineEl.className = 'maze-line';
-    lineEl.style.left = l.x + 'px';
-    lineEl.style.top = l.y + 'px';
-    lineEl.style.width = l.w + 'px';
-    lineEl.style.height = l.h + 'px';
-    board.appendChild(lineEl);
+
+// بناء الخلايا وحوائطها المضيئة ديناميكياً
+mazeData.forEach(cell => {
+    const cellEl = document.createElement('div');
+    cellEl.className = 'cell';
+    if (cell.top) cellEl.classList.add('w-top');
+    if (cell.bottom) cellEl.classList.add('w-bottom');
+    if (cell.left) cellEl.classList.add('w-left');
+    if (cell.right) cellEl.classList.add('w-right');
+    
+    cellEl.setAttribute('data-r', cell.r);
+    cellEl.setAttribute('data-c', cell.c);
+    board.appendChild(cellEl);
 });
 
-function updatePositions() {
-    document.getElementById('groom').style.left = groomPos.x + 'px';
-    document.getElementById('groom').style.top = groomPos.y + 'px';
-    document.getElementById('bride').style.left = bridePos.x + 'px';
-    document.getElementById('bride').style.top = bridePos.y + 'px';
-}
-updatePositions();
+// حقن العريس والعروسة داخل الـ DOM
+const groomEl = document.createElement('div');
+groomEl.id = 'groom';
+groomEl.className = 'player-inside groom-img';
 
-// فحص تصادم دقيق ومرن يسمح بمرور العريس من الفتحات
-function isColliding(nextX, nextY) {
-    // منع الخروج برا الصندوق الأساسي للمتاهة
-    if (nextX < 0 || nextX + 20 > boardSize || nextY < 0 || nextY + 20 > boardSize) return true;
+const brideEl = document.createElement('div');
+brideEl.id = 'bride';
+brideEl.className = 'target-inside bride-img';
+
+function renderPlayers() {
+    // جلب المربعات الحالية ووضع الصور جواها
+    const groomTargetCell = document.querySelector(`[data-r='${groomGrid.r}'][data-c='${groomGrid.c}']`);
+    const brideTargetCell = document.querySelector(`[data-r='${brideGrid.r}'][data-c='${brideGrid.c}']`);
     
-    // فحص عدم تخطي الخطوط
-    for (let l of lines) {
-        if (l.w > l.h) { // خط أفقي
-            if (nextX < l.x + l.w && nextX + 20 > l.x && nextY < l.y + 2 && nextY + 20 > l.y - 2) {
-                return true;
-            }
-        } else { // خط رأسي
-            if (nextX < l.x + 2 && nextX + 20 > l.x - 2 && nextY < l.y + l.h && nextY + 20 > l.y) {
-                return true;
-            }
-        }
-    }
-    return false;
+    if(groomTargetCell) groomTargetCell.appendChild(groomEl);
+    if(brideTargetCell) brideTargetCell.appendChild(brideEl);
 }
+renderPlayers();
 
+// فحص قفل الحوائط الحسابي الصارم لمنع اختراق الحوائط
 function moveGroom(dir) {
-    let nextX = groomPos.x;
-    let nextY = groomPos.y;
-
-    if (dir === 'up') nextY -= step;
-    if (dir === 'down') nextY += step;
-    if (dir === 'left') nextX -= step;
-    if (dir === 'right') nextX += step;
-
-    if (!isColliding(nextX, nextY)) {
-        groomPos.x = nextX;
-        groomPos.y = nextY;
-        updatePositions();
-        checkWin();
+    const currentCell = mazeData.find(cell => cell.r === groomGrid.r && cell.c === groomGrid.c);
+    
+    if (dir === 'up') {
+        if (currentCell.top || groomGrid.r === 0) return; // حيطة سد
+        const nextCell = mazeData.find(cell => cell.r === groomGrid.r - 1 && cell.c === groomGrid.c);
+        if (nextCell.bottom) return; 
+        groomGrid.r--;
     }
+    if (dir === 'down') {
+        if (currentCell.bottom || groomGrid.r === 4) return; // حيطة سد
+        const nextCell = mazeData.find(cell => cell.r === groomGrid.r + 1 && cell.c === groomGrid.c);
+        if (nextCell.top) return;
+        groomGrid.r++;
+    }
+    if (dir === 'left') {
+        if (currentCell.left || groomGrid.c === 0) return; // حيطة سد
+        const nextCell = mazeData.find(cell => cell.r === groomGrid.r && cell.c === groomGrid.c - 1);
+        if (nextCell.right) return;
+        groomGrid.c--;
+    }
+    if (dir === 'right') {
+        if (currentCell.right || groomGrid.c === 4) return; // حيطة سد
+        const nextCell = mazeData.find(cell => cell.r === groomGrid.r && cell.c === groomGrid.c + 1);
+        if (nextCell.left) return;
+        groomGrid.c++;
+    }
+
+    renderPlayers();
+    checkWin();
 }
 
-// تشغيل التحكم بأسهم الكيبورد للكمبيوتر فوراً
+// الكيبورد شغال علطول مع الأسهم و W,A,S,D
 window.addEventListener('keydown', (e) => {
     if(document.getElementById('screen2').style.display === 'block') {
         if(e.key === 'ArrowUp' || e.key === 'w') moveGroom('up');
@@ -102,13 +127,11 @@ window.addEventListener('keydown', (e) => {
 });
 
 function checkWin() {
-    // تصفير نسبة الخطأ في التلامس بين العريس والعروسة
-    if (Math.abs(groomPos.x - bridePos.x) < 10 && Math.abs(groomPos.y - bridePos.y) < 10) {
+    if (groomGrid.r === brideGrid.r && groomGrid.c === brideGrid.c) {
         document.getElementById('maze-success').style.display = 'flex';
     }
 }
 
-// دالة إظهار المحتوى المخفي بالكامل تحت المتاهة
 function revealLowerContent() {
     document.getElementById('maze-success').style.display = 'none';
     const hiddenDetails = document.getElementById('hidden-details');
@@ -117,7 +140,6 @@ function revealLowerContent() {
     startCountdown();
 }
 
-// تشغيل العداد التنازلي
 function startCountdown() {
     const weddingDate = new Date("August 13, 2026 18:00:00").getTime();
     const interval = setInterval(function() {
@@ -135,7 +157,7 @@ function startCountdown() {
 
         if (distance < 0) {
             clearInterval(interval);
-            document.getElementById("countdown-clock").innerHTML = "<div style='color:var(--gold)'>The Celebration Has Begun!</div>";
+            document.getElementById("countdown-clock").innerHTML = "<div>The Celebration Has Begun!</div>";
         }
     }, 1000);
 }

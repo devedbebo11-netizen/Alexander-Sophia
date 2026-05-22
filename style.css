@@ -1,18 +1,14 @@
 :root {
-    --bg-dark: #1e355a; 
-    --card-bg: #14243f;
+    --bg-dark: #121f38; 
+    --card-bg: #192a4a;
     --gold: #c5a880;
     --text-light: #ffffff;
-    --text-muted: #8ba2c1;
+    --text-muted: #7e94b3;
     --heart: #ff477e;
-    --maze-line-color: #3b629b; 
+    --maze-line-color: #38598b; 
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -21,202 +17,117 @@ body {
     overflow-x: hidden;
 }
 
-/* --- الظرف الشاشة الأولى --- */
+/* --- الظرف --- */
 #screen1 {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #111e33;
-    perspective: 1000px;
+    width: 100vw; height: 100vh; display: flex;
+    justify-content: center; align-items: center; background: #0c1524; perspective: 1000px;
 }
-
 .envelope-wrapper {
-    position: relative;
-    width: 280px;
-    height: 180px;
-    background-color: #1a2d4c;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-    transform-style: preserve-3d;
-    transition: transform 0.5s ease;
+    position: relative; width: 280px; height: 180px; background-color: #1a2d4c; box-shadow: 0 30px 60px rgba(0,0,0,0.5); transform-style: preserve-3d; transition: transform 0.5s ease;
 }
-
 .envelope-wrapper::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 0; height: 0;
-    border-left: 140px solid transparent;
-    border-right: 140px solid transparent;
-    border-top: 90px solid #233b63;
-    transform-origin: top;
-    transition: transform 0.4s ease 0.2s;
-    z-index: 3;
+    content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 90px solid #233b63; transform-origin: top; transition: transform 0.4s ease 0.2s; z-index: 3;
 }
-
 .envelope-wrapper.open::before { transform: rotateX(180deg); z-index: 1; }
-
-.envelope-box {
-    position: absolute;
-    bottom: 0; width: 100%; height: 100%;
-    background-color: #152540;
-    z-index: 2;
-}
-
-.heart-btn {
-    position: absolute;
-    top: 50%; left: 50%; transform: translate(-50%, -50%);
-    font-size: 2.2rem; color: var(--heart); z-index: 4;
-    cursor: pointer;
-}
-
+.envelope-box { position: absolute; bottom: 0; width: 100%; height: 100%; background-color: #152540; z-index: 2; }
+.heart-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2.2rem; color: var(--heart); z-index: 4; cursor: pointer; }
 .letter-card {
-    position: absolute;
-    bottom: 5px; left: 10px; width: 260px; height: 160px;
-    background: #ffffff; border-radius: 4px; z-index: 1;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    position: absolute; bottom: 5px; left: 10px; width: 260px; height: 160px; background: #ffffff; border-radius: 4px; z-index: 1; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
-
 .envelope-wrapper.open .letter-card { transform: translateY(-120px); z-index: 3; }
-
 .letter-card h2 { font-family: 'Great Vibes', cursive; color: #152540; font-size: 2rem; }
+.next-screen-btn { background: var(--bg-dark); border: none; color: white; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; margin-top: 15px; }
 
-.next-screen-btn {
-    background: var(--bg-dark); border: none; color: white;
-    padding: 6px 12px; font-size: 0.7rem; cursor: pointer; margin-top: 15px;
-}
-
-/* --- الشاشة الثانية --- */
+/* --- محتوى الدعوة --- */
 #screen2 { display: none; padding: 40px 20px; }
-
 .container { max-width: 450px; margin: 0 auto; text-align: center; }
-
-.top-tag { font-size: 0.75rem; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 10px; }
-
+.top-tag { font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 10px; }
 .monogram { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: var(--gold); margin: 15px 0; }
-
 .main-names { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; margin: 20px 0; }
-
 .promise-text { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--gold); }
-
 .date-badge { padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); margin: 30px 0; }
-
 .hero-img-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
 .hero-img-container img { width: 100%; display: block; }
 
-/* بار الصور */
-.maze-header-avatars {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 280px;
-    margin: 0 auto 15px auto;
-}
+/* نصوص المتاهة المأخوذة من لقطة الشاشة */
+.maze-title-text { font-size: 0.65rem; letter-spacing: 3px; color: var(--gold); margin-top: 25px; }
+.maze-subtitle-text { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; margin: 5px 0; letter-spacing: 1px; }
+.maze-desc-text { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; }
+
+/* بار صور العرسان */
+.maze-header-avatars { display: flex; justify-content: space-around; align-items: center; max-width: 280px; margin: 0 auto; }
 .avatar-info { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.avatar-info span { font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); }
-.header-circle { width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; }
-.heart-connect { display: flex; align-items: center; gap: 8px; color: var(--heart); font-size: 0.75rem; }
+.avatar-info span { font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); font-weight: 600; }
+.header-circle { width: 42px; height: 42px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+.heart-connect { display: flex; align-items: center; gap: 8px; color: var(--heart); font-size: 0.7rem; }
 
-/* صور بنترست السريعة والمستقرة أونلاين للمتاهة */
-.groom-img {
-    background-image: url("https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=150");
-    background-size: cover; background-position: center;
-}
-.bride-img {
-    background-image: url("https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=150");
-    background-size: cover; background-position: center;
-}
+/* صور بنترست السريعة المستقرة أونلاين */
+.groom-img { background-image: url("https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=150"); background-size: cover; background-position: center; }
+.bride-img { background-image: url("https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=150"); background-size: cover; background-position: center; }
 
-/* صندوق اللعبة */
-.maze-section {
-    position: relative;
-    background: #111d31; 
-    padding: 20px;
-    border-radius: 16px;
-    max-width: 280px;
-    margin: 0 auto 40px auto;
-    border: 1px solid rgba(255,255,255,0.05);
-}
-
-.maze-container {
-    position: relative;
-    width: 240px;
-    height: 240px;
-    background: transparent;
-    margin: 0 auto;
-}
-
-.maze-line {
-    position: absolute;
-    background-color: var(--maze-line-color);
-}
-
-.avatar-player, .avatar-target {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1.5px solid white;
-    z-index: 5;
-}
-
-/* الأزرار الدائرية الزرقاء */
-.controls {
+/* بناء بوكس المتاهة بنظام الـ Grid الحقيقي لمنع العبور العشوائي */
+.maze-section { position: relative; background: #0f1a2e; padding: 20px; border-radius: 16px; max-width: 290px; margin: 0 auto 40px auto; border: 1px solid rgba(255,255,255,0.05); }
+.maze-grid {
     display: grid;
-    grid-template-columns: repeat(3, 42px);
-    gap: 8px;
-    justify-content: center;
-    margin-top: 20px;
+    grid-template-columns: repeat(5, 48px);
+    grid-template-rows: repeat(5, 48px);
+    width: 240px; height: 240px; margin: 0 auto;
+    position: relative; background: transparent;
 }
-.btn-dir {
-    height: 42px; background: #3b629b; border: none;
-    color: white; font-size: 1rem; border-radius: 50%; cursor: pointer;
-}
-.btn-dir:active { background: white; color: #1e355a; }
-.dpad-center { display: flex; justify-content: center; align-items: center; color: var(--heart); }
 
-/* شاشة الفوز بالتحدي */
-.success-overlay {
-    display: none;
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(17, 29, 49, 0.96);
-    border-radius: 16px;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+/* المربعات والأسوار المضيئة بالكامل */
+.cell {
+    position: relative; width: 48px; height: 48px; box-sizing: border-box;
 }
+/* تنسيق جدران المتاهة المضيئة زرقاء رفيعة نفس لقطة الشاشة */
+.w-top { border-top: 2.5px solid var(--maze-line-color); }
+.w-bottom { border-bottom: 2.5px solid var(--maze-line-color); }
+.w-left { border-left: 2.5px solid var(--maze-line-color); }
+.w-right { border-right: 2.5px solid var(--maze-line-color); }
+
+/* تصميم العرايس داخل شبكة اللعبة الدائرية */
+.player-inside, .target-inside {
+    position: absolute; width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid white; top: 7px; left: 7px; z-index: 10;
+    transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+/* الأزرار الدائرية الزرقاء المتطابقة مع الصورة بالملي */
+.controls { display: grid; grid-template-columns: repeat(3, 44px); gap: 10px; justify-content: center; margin-top: 25px; }
+.btn-dir { height: 44px; background: #284473; border: none; color: white; font-size: 1.1rem; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+.btn-dir:active { background: white; color: #121f38; }
+.dpad-center { display: flex; justify-content: center; align-items: center; color: var(--heart); font-size: 0.9rem; }
+
+/* شاشة الفوز المنبثقة فوق المتاهة لمنع الرؤية */
+.success-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 26, 46, 0.97); border-radius: 16px; justify-content: center; align-items: center; z-index: 100; }
 .success-card h3 { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; margin-bottom: 15px; }
 .heart-icon-wrap { font-size: 2rem; color: var(--heart); margin-bottom: 10px; }
-.continue-btn {
-    background: white; color: #111d31; border: none;
-    padding: 8px 16px; font-weight: 600; font-size: 0.75rem; cursor: pointer;
-}
+.continue-btn { background: white; color: #0f1a2e; border: none; padding: 10px 20px; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-radius: 4px; }
 
-/* الجزء السفلي (مخفي في البداية بأنيميشن) */
-#hidden-details {
+/* إخفاء المحتوى السفلي تماماً بقفل برمجي صلب ومحكم */
+.hidden-content-block {
     display: none;
     opacity: 0;
-    transition: opacity 0.8s ease-in-out;
+    transition: opacity 0.8s ease;
     margin-top: 40px;
 }
 
-.section-divider-text { color: var(--gold); margin: 30px 0 10px; font-size: 0.75rem; letter-spacing: 2px; }
-.invited-header { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; margin-bottom: 20px; color: var(--gold); }
-.detail-row { margin: 12px 0; font-size: 0.95rem; }
+/* بقية عناصر الدعوة */
+.section-divider-text { color: var(--gold); margin: 35px 0 10px; font-size: 0.75rem; letter-spacing: 2px; font-weight: 600; }
+.invited-header { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; margin-bottom: 20px; color: var(--gold); }
+.detail-row { margin: 12px 0; font-size: 0.9rem; color: white; }
 .detail-row i { color: var(--gold); margin-right: 8px; }
 
-.countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 30px 0; }
-.count-item { background: #111d31; padding: 10px 0; border-radius: 6px; }
-.count-item span { display: block; font-size: 1.3rem; font-weight: 600; color: var(--gold); }
+.countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 35px 0; }
+.count-item { background: #0f1a2e; padding: 12px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); }
+.count-item span { display: block; font-size: 1.4rem; font-weight: 600; color: var(--gold); }
 .count-item label { font-size: 0.65rem; color: var(--text-muted); }
 
-.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 30px; }
-.gallery-item img { width: 100%; height: 110px; object-fit: cover; border-radius: 4px; }
+.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 35px; }
+.gallery-item img { width: 100%; height: 115px; object-fit: cover; border-radius: 6px; }
 
-.together-forever { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); }
-.together-sub { font-size: 0.8rem; letter-spacing: 4px; margin-bottom: 30px; }
-
-.action-links { display: flex; flex-direction: column; gap: 10px; }
-.btn-action { display: block; padding: 12px; background: #111d31; border: 1px solid var(--gold); color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 600; text-align: center;}
+.together-forever { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--gold); }
+.together-sub { font-size: 0.8rem; letter-spacing: 4px; margin-bottom: 35px; color: var(--text-muted); }
+.action-links { display: flex; flex-direction: column; gap: 12px; }
+.btn-action { display: block; padding: 14px; background: #0f1a2e; border: 1px solid var(--gold); color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 600; text-align: center; letter-spacing: 1px; }
