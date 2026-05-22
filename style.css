@@ -1,3 +1,5 @@
+CSS
+
 :root {
     --bg-dark: #121f38; 
     --card-bg: #192a4a;
@@ -8,11 +10,7 @@
     --maze-line-color: #38598b; 
 }
 
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Montserrat', sans-serif;
@@ -21,416 +19,116 @@ body {
     overflow-x: hidden;
 }
 
-/* --- الظرف (الشاشة الأولى) --- */
+/* --- الظرف --- */
 #screen1 {
-    width: 100vw; 
-    height: 100vh; 
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    background: #0c1524; 
-    perspective: 1000px;
+    width: 100vw; height: 100vh; display: flex;
+    justify-content: center; align-items: center; background: #0c1524; perspective: 1000px;
 }
 .envelope-wrapper {
-    position: relative; 
-    width: 280px; 
-    height: 180px; 
-    background-color: #1a2d4c; 
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5); 
-    transform-style: preserve-3d; 
-    transition: transform 0.5s ease;
+    position: relative; width: 280px; height: 180px; background-color: #1a2d4c; box-shadow: 0 30px 60px rgba(0,0,0,0.5); transform-style: preserve-3d; transition: transform 0.5s ease;
 }
 .envelope-wrapper::before {
-    content: ''; 
-    position: absolute; 
-    top: 0; left: 0; 
-    width: 0; height: 0; 
-    border-left: 140px solid transparent; 
-    border-right: 140px solid transparent; 
-    border-top: 90px solid #233b63; 
-    transform-origin: top; 
-    transition: transform 0.4s ease 0.2s; 
-    z-index: 3;
+    content: ''; position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 140px solid transparent; border-right: 140px solid transparent; border-top: 90px solid #233b63; transform-origin: top; transition: transform 0.4s ease 0.2s; z-index: 3;
 }
-.envelope-wrapper.open::before { 
-    transform: rotateX(180deg); 
-    z-index: 1; 
-}
-.envelope-box { 
-    position: absolute; 
-    bottom: 0; 
-    width: 100%; 
-    height: 100%; 
-    background-color: #152540; 
-    z-index: 2; 
-}
-.heart-btn { 
-    position: absolute; 
-    top: 50%; left: 50%; 
-    transform: translate(-50%, -50%); 
-    font-size: 2.2rem; 
-    color: var(--heart); 
-    z-index: 4; 
-    cursor: pointer; 
-}
+.envelope-wrapper.open::before { transform: rotateX(180deg); z-index: 1; }
+.envelope-box { position: absolute; bottom: 0; width: 100%; height: 100%; background-color: #152540; z-index: 2; }
+.heart-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 2.2rem; color: var(--heart); z-index: 4; cursor: pointer; }
 .letter-card {
-    position: absolute; 
-    bottom: 5px; left: 10px; 
-    width: 260px; height: 160px; 
-    background: #ffffff; 
-    border-radius: 4px; 
-    z-index: 1; 
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
+    position: absolute; bottom: 5px; left: 10px; width: 260px; height: 160px; background: #ffffff; border-radius: 4px; z-index: 1; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
-.envelope-wrapper.open .letter-card { 
-    transform: translateY(-120px); 
-    z-index: 3; 
-}
-.letter-card h2 { 
-    font-family: 'Great Vibes', cursive; 
-    color: #152540; 
-    font-size: 2rem; 
-}
-.next-screen-btn { 
-    background: var(--bg-dark); 
-    border: none; 
-    color: white; 
-    padding: 6px 12px; 
-    font-size: 0.7rem; 
-    cursor: pointer; 
-    margin-top: 15px; 
-}
+.envelope-wrapper.open .letter-card { transform: translateY(-120px); z-index: 3; }
+.letter-card h2 { font-family: 'Great Vibes', cursive; color: #152540; font-size: 2rem; }
+.next-screen-btn { background: var(--bg-dark); border: none; color: white; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; margin-top: 15px; }
 
-/* --- الشاشة الثانية (محتوى الدعوة) --- */
-#screen2 { 
-    display: none; 
-    padding: 40px 20px; 
-}
-.container { 
-    max-width: 450px; 
-    margin: 0 auto; 
-    text-align: center; 
-}
-.top-tag { 
-    font-size: 0.7rem; 
-    letter-spacing: 4px; 
-    color: var(--text-muted); 
-    margin-bottom: 10px; 
-}
-.monogram { 
-    font-family: 'Cinzel Decorative', serif; 
-    font-size: 2rem; 
-    color: var(--gold); 
-    margin: 15px 0; 
-}
-.main-names { 
-    font-family: 'Cinzel Decorative', serif; 
-    font-size: 1.8rem; 
-    margin: 20px 0; 
-}
-.promise-text { 
-    font-family: 'Great Vibes', cursive; 
-    font-size: 1.6rem; 
-    color: var(--gold); 
-}
-.date-badge { 
-    padding: 15px 0; 
-    border-top: 1px solid rgba(255,255,255,0.1); 
-    border-bottom: 1px solid rgba(255,255,255,0.1); 
-    margin: 30px 0; 
-}
-.hero-img-container { 
-    width: 100%; 
-    border-radius: 8px; 
-    overflow: hidden; 
-    margin-bottom: 40px; 
-}
-.hero-img-container img { 
-    width: 100%; 
-    display: block; 
-}
+/* --- الشاشة الثانية --- */
+#screen2 { display: none; padding: 40px 20px; }
+.container { max-width: 450px; margin: 0 auto; text-align: center; }
+.top-tag { font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 10px; }
+.monogram { font-family: 'Cinzel Decorative', serif; font-size: 2rem; color: var(--gold); margin: 15px 0; }
+.main-names { font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; margin: 20px 0; }
+.promise-text { font-family: 'Great Vibes', cursive; font-size: 1.6rem; color: var(--gold); }
+.date-badge { padding: 15px 0; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); margin: 30px 0; }
+.hero-img-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
+.hero-img-container img { width: 100%; display: block; }
 
-/* نصوص لعبة المتاهة */
-.maze-title-text { 
-    font-size: 0.65rem; 
-    letter-spacing: 3px; 
-    color: var(--gold); 
-    margin-top: 25px; 
-}
-.maze-subtitle-text { 
-    font-family: 'Cinzel Decorative', serif; 
-    font-size: 1.1rem; 
-    margin: 5px 0; 
-    letter-spacing: 1px; 
-}
-.maze-desc-text { 
-    font-size: 0.75rem; 
-    color: var(--text-muted); 
-    margin-bottom: 20px; 
-}
+.maze-title-text { font-size: 0.65rem; letter-spacing: 3px; color: var(--gold); margin-top: 25px; }
+.maze-subtitle-text { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; margin: 5px 0; letter-spacing: 1px; }
+.maze-desc-text { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; }
 
-/* بار الصور الدائرية فوق المتاهة */
-.maze-header-avatars { 
-    display: flex; 
-    justify-content: space-around; 
-    align-items: center; 
-    max-width: 280px; 
-    margin: 0 auto 15px auto; 
-}
-.avatar-info { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    gap: 5px; 
-}
-.avatar-info span { 
-    font-size: 0.65rem; 
-    letter-spacing: 2px; 
-    color: var(--text-muted); 
-    font-weight: 600; 
-}
-.header-circle { 
-    width: 42px; 
-    height: 42px; 
-    border-radius: 50%; 
-    border: 2px solid white; 
-}
-.heart-connect { 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    color: var(--heart); 
-    font-size: 0.7rem; 
-}
+.maze-header-avatars { display: flex; justify-content: space-around; align-items: center; max-width: 280px; margin: 0 auto 15px auto; }
+.avatar-info { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.avatar-info span { font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); font-weight: 600; }
+.header-circle { width: 42px; height: 42px; border-radius: 50%; border: 2px solid white; }
+.heart-connect { display: flex; align-items: center; gap: 8px; color: var(--heart); font-size: 0.7rem; }
 
-/* مسارات الصور الشخصية للعرسان (تتغير من هنا) */
-.groom-img { 
-    background-image: url("https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=150"); 
-    background-size: cover; 
-    background-position: center; 
-}
-.bride-img { 
-    background-image: url("https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=150"); 
-    background-size: cover; 
-    background-position: center; 
-}
+/* روابط صور العرسان الدائرية المخصصة للمتاهة */
+.groom-img { background-image: url("https://i.ibb.co/pjPtX1sp/IMG-2462.jpg"); background-size: cover; background-position: center; }
+.bride-img { background-image: url("https://i.ibb.co/pjPtX1sp/IMG-2462.jpg"); background-size: cover; background-position: center; }
 
-/* صندوق المتاهة المربع */
-.maze-section { 
-    position: relative; 
-    background: #0f1a2e; 
-    padding: 20px; 
-    border-radius: 16px; 
-    max-width: 290px; 
-    margin: 0 auto 40px auto; 
-    border: 1px solid rgba(255,255,255,0.05); 
-}
+/* صندوق المتاهة المربع الحقيقي */
+.maze-section { position: relative; background: #0f1a2e; padding: 20px; border-radius: 16px; max-width: 290px; margin: 0 auto 40px auto; border: 1px solid rgba(255,255,255,0.05); }
 
-/* شبكة المتاهة بالأبعاد الصارمة بالبكسل */
 .maze-grid {
     display: grid;
     grid-template-columns: repeat(5, 48px);
     grid-template-rows: repeat(5, 48px);
-    width: 240px; 
-    height: 240px; 
-    margin: 0 auto;
-    position: relative; 
-    background: #111d33;
+    width: 240px; height: 240px; margin: 0 auto;
+    position: relative; background: #111d33;
     border: 3px solid var(--maze-line-color);
 }
 
-/* المربعات الفردية والحدود الزرقاء المنيرة */
-.cell {
-    position: relative; 
-    width: 48px; 
-    height: 48px; 
-    box-sizing: border-box;
-}
+.cell { position: relative; width: 48px; height: 48px; box-sizing: border-box; }
 .w-top { border-top: 3.5px solid var(--maze-line-color); }
 .w-bottom { border-bottom: 3.5px solid var(--maze-line-color); }
 .w-left { border-left: 3.5px solid var(--maze-line-color); }
 .w-right { border-right: 3.5px solid var(--maze-line-color); }
 
-/* أشكال ومقاسات العرسان جوة شبكة اللعب */
 .player-inside, .target-inside {
-    position: absolute; 
-    width: 36px; 
-    height: 36px; 
-    border-radius: 50%;
-    border: 2px solid white; 
-    top: 4px; 
-    left: 4px; 
-    z-index: 10;
+    position: absolute; width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid white; top: 4px; left: 4px; z-index: 10;
     box-shadow: 0 0 8px rgba(255,255,255,0.4);
 }
 
-/* أزرار التحكم الدائرية الزرقاء (مع حل مشكلة الزووم) */
-.controls { 
-    display: grid; 
-    grid-template-columns: repeat(3, 44px); 
-    gap: 10px; 
-    justify-content: center; 
-    margin-top: 25px; 
-}
+/* أزرار التحكم وحل مشكلة الزووم المتكرر على الموبايل */
+.controls { display: grid; grid-template-columns: repeat(3, 44px); gap: 10px; justify-content: center; margin-top: 25px; }
 .btn-dir { 
-    height: 44px; 
-    background: #284473; 
-    border: none; 
-    color: white; 
-    font-size: 1.1rem; 
-    border-radius: 50%; 
-    cursor: pointer; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-    
-    /* منع الموبايل من عمل زووم عند الضغط السريع المتكرر */
-    touch-action: manipulation; 
-    user-select: none; 
+    height: 44px; background: #284473; border: none; color: white; font-size: 1.1rem; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+    touch-action: manipulation; /* منع الزووم عند الضغط المتكرر السريع */
+    user-select: none;
 }
-.btn-dir:active { 
-    background: white; 
-    color: #121f38; 
-}
-.dpad-center { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    color: var(--heart); 
-    font-size: 0.9rem; 
-}
+.btn-dir:active { background: white; color: #121f38; }
+.dpad-center { display: flex; justify-content: center; align-items: center; color: var(--heart); font-size: 0.9rem; }
 
-/* شاشة الفوز المنبثقة المحكمة */
-.success-overlay { 
-    display: none; 
-    position: absolute; 
-    top: 0; left: 0; 
-    width: 100%; height: 100%; 
-    background: rgba(15, 26, 46, 0.97); 
-    border-radius: 16px; 
-    justify-content: center; 
-    align-items: center; 
-    z-index: 100; 
-}
-.success-card h3 { 
-    font-family: 'Cinzel Decorative', serif; 
-    font-size: 1.1rem; 
-    margin-bottom: 15px; 
-}
-.heart-icon-wrap { 
-    font-size: 2rem; 
-    color: var(--heart); 
-    margin-bottom: 10px; 
-}
-.continue-btn { 
-    background: white; 
-    color: #0f1a2e; 
-    border: none; 
-    padding: 10px 20px; 
-    font-weight: 600; 
-    font-size: 0.75rem; 
-    cursor: pointer; 
-    border-radius: 4px; 
-}
+.success-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 26, 46, 0.97); border-radius: 16px; justify-content: center; align-items: center; z-index: 100; }
+.success-card h3 { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; margin-bottom: 15px; }
+.heart-icon-wrap { font-size: 2rem; color: var(--heart); margin-bottom: 10px; }
+.continue-btn { background: white; color: #0f1a2e; border: none; padding: 10px 20px; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-radius: 4px; }
 
-/* قفل وعزل المحتويات السفلية بالكامل برمجياً */
-.hidden-content-block { 
-    display: none; 
-    opacity: 0; 
-    transition: opacity 0.8s ease; 
-    margin-top: 40px; 
-}
+.hidden-content-block { display: none; opacity: 0; transition: opacity 0.8s ease; margin-top: 40px; }
 
-/* باقي عناصر وتنسيقات صفحات الدعوة */
-.section-divider-text { 
-    color: var(--gold); 
-    margin: 35px 0 10px; 
-    font-size: 0.75rem; 
-    letter-spacing: 2px; 
-    font-weight: 600; 
-}
-.invited-header { 
-    font-family: 'Cinzel Decorative', serif; 
-    font-size: 1.3rem; 
-    margin-bottom: 20px; 
-    color: var(--gold); 
-}
-.detail-row { 
-    margin: 12px 0; 
-    font-size: 0.9rem; 
-    color: white; 
-}
-.detail-row i { 
-    color: var(--gold); 
-    margin-right: 8px; 
-}
+/* --- تنسيق الخط الزمني (Timeline) القديم المظبوط --- */
+.timeline-container { position: relative; max-width: 320px; margin: 20px auto; padding: 10px 0; text-align: left; }
+.timeline-container::after { content: ''; position: absolute; width: 2px; background-color: rgba(197, 168, 128, 0.2); top: 0; bottom: 0; left: 20px; margin-left: -1px; }
+.timeline-item { padding: 10px 30px; position: relative; background-color: transparent; display: flex; align-items: center; margin-bottom: 15px; }
+.timeline-icon { position: absolute; width: 30px; height: 30px; left: 5px; background-color: var(--card-bg); border: 2px solid var(--gold); border-radius: 50%; z-index: 1; display: flex; justify-content: center; align-items: center; color: var(--gold); font-size: 0.8rem; box-shadow: 0 0 8px rgba(197, 168, 128, 0.4); }
+.timeline-content { padding: 10px 15px; background: rgba(255, 255, 255, 0.03); border-radius: 6px; width: 100%; border-left: 3px solid var(--gold); }
+.timeline-content h3 { font-size: 0.9rem; color: var(--gold); font-weight: 600; margin-bottom: 3px; letter-spacing: 1px; }
+.timeline-content p { font-size: 0.8rem; color: var(--text-light); }
 
-.countdown { 
-    display: grid; 
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px; 
-    margin: 35px 0; 
-}
-.count-item { 
-    background: #0f1a2e; 
-    padding: 12px 0; 
-    border-radius: 8px; 
-    border: 1px solid rgba(255,255,255,0.03); 
-}
-.count-item span { 
-    display: block; 
-    font-size: 1.4rem; 
-    font-weight: 600; 
-    color: var(--gold); 
-}
-.count-item label { 
-    font-size: 0.65rem; 
-    color: var(--text-muted); 
-}
+.section-divider-text { color: var(--gold); margin: 35px 0 10px; font-size: 0.75rem; letter-spacing: 2px; font-weight: 600; text-align: center; }
+.invited-header { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; margin-bottom: 20px; color: var(--gold); }
+.detail-row { margin: 12px 0; font-size: 0.9rem; color: white; }
+.detail-row i { color: var(--gold); margin-right: 8px; }
 
-.gallery-grid { 
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 10px; 
-    margin-bottom: 35px; 
-}
-.gallery-item img { 
-    width: 100%; 
-    height: 115px; 
-    object-fit: cover; 
-    border-radius: 6px; 
-}
+.countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 35px 0; }
+.count-item { background: #0f1a2e; padding: 12px 0; border-radius: 8px; border: 1px solid rgba(255,255,255,0.03); }
+.count-item span { display: block; font-size: 1.4rem; font-weight: 600; color: var(--gold); }
+.count-item label { font-size: 0.65rem; color: var(--text-muted); }
 
-.together-forever { 
-    font-family: 'Great Vibes', cursive; 
-    font-size: 3.2rem; 
-    color: var(--gold); 
-}
-.together-sub { 
-    font-size: 0.8rem; 
-    letter-spacing: 4px; 
-    margin-bottom: 35px; 
-    color: var(--text-muted); 
-}
-.action-links { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; 
-}
-.btn-action { 
-    display: block; 
-    padding: 14px; 
-    background: #0f1a2e; 
-    border: 1px solid var(--gold); 
-    color: #fff; 
-    text-decoration: none; 
-    font-size: 0.75rem; 
-    font-weight: 600; 
-    text-align: center; 
-    letter-spacing: 1px; 
-}
+.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 35px; }
+.gallery-item img { width: 100%; height: 115px; object-fit: cover; border-radius: 6px; }
+
+.together-forever { font-family: 'Great Vibes', cursive; font-size: 3.2rem; color: var(--gold); }
+.together-sub { font-size: 0.8rem; letter-spacing: 4px; margin-bottom: 35px; color: var(--text-muted); }
+.action-links { display: flex; flex-direction: column; gap: 12px; }
+.btn-action { display: block; padding: 14px; background: #0f1a2e; border: 1px solid var(--gold); color: #fff; text-decoration: none; font-size: 0.75rem; font-weight: 600; text-align: center; letter-spacing: 1px; }
