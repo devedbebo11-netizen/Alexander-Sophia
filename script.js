@@ -10,47 +10,47 @@ function goToInvitation(event) {
     window.scrollTo(0, 0);
 }
 
-// ================= نظام المتاهة الحقيقي الحسابي الصارم =================
-// مصفوفة الخرائط الـ 25 مربع المأخوذة من حيطان لقطة الشاشة الأصلية بالملي
+// ================= خريطة المتاهة الحسابية الصارمة =================
+// 25 مربع مبنيين بنظام الـ الحدود المغلقة والمفتوحة (ممر سالك ومضمون)
 const mazeData = [
-    // الصف الأول (0 إلى 4)
-    { r:0, c:0, top:true,  bottom:false, left:true,  right:false },
-    { r:0, c:1, top:true,  bottom:true,  left:false, right:false },
-    { r:0, c:2, top:true,  bottom:false, left:false, right:true  },
-    { r:0, c:3, top:true,  bottom:false, left:true,  right:false },
-    { r:0, c:4, top:true,  bottom:false, left:false, right:true  },
-    // الصف الثاني (5 إلى 9)
-    { r:1, c:0, top:false, bottom:false, left:true,  right:true  },
+    { r:0, c:0, top:false, bottom:false, left:false, right:true },
+    { r:0, c:1, top:false, bottom:true,  left:true,  right:false },
+    { r:0, c:2, top:false, bottom:false, left:false, right:true },
+    { r:0, c:3, top:false, bottom:true,  left:true,  right:false },
+    { r:0, c:4, top:false, bottom:false, left:false, right:false },
+
+    { r:1, c:0, top:false, bottom:false, left:false, right:true },
     { r:1, c:1, top:true,  bottom:false, left:true,  right:false },
     { r:1, c:2, top:false, bottom:true,  left:false, right:false },
-    { r:1, c:3, top:false, bottom:true,  left:false, right:true  },
-    { r:1, c:4, top:false, bottom:false, left:true,  right:true  },
-    // الصف الثالث (10 إلى 14)
-    { r:2, c:0, top:false, bottom:true,  left:true,  right:false },
-    { r:2, c:1, top:false, bottom:true,  left:false, right:true  },
-    { r:2, c:2, top:true,  bottom:false, left:true,  right:false },
-    { r:2, c:3, top:true,  bottom:false, left:false, right:true  },
-    { r:2, c:4, top:false, bottom:true,  left:true,  right:true  },
-    // الصف الرابع (15 === 19)
-    { r:3, c:0, top:true,  bottom:false, left:true,  right:true  },
+    { r:1, c:3, top:true,  bottom:false, left:false, right:true },
+    { r:1, c:4, top:false, bottom:false, left:true,  right:false },
+
+    { r:2, c:0, top:false, bottom:false, left:false, right:true },
+    { r:2, c:1, top:false, bottom:true,  left:true,  right:false },
+    { r:2, c:2, top:true,  bottom:false, left:false, right:true },
+    { r:2, c:3, top:false, bottom:false, left:true,  right:false },
+    { r:2, c:4, top:false, bottom:true,  left:false, right:false },
+
+    { r:3, c:0, top:false, bottom:false, left:false, right:true },
     { r:3, c:1, top:true,  bottom:false, left:true,  right:false },
-    { r:3, c:2, top:false, bottom:true,  left:false, right:true  },
-    { r:3, c:3, top:false, bottom:false, left:true,  right:false },
-    { r:3, c:4, top:true,  bottom:false, left:false, right:true  },
-    // الصف الخامس (20 === 24)
-    { r:4, c:0, top:false, bottom:true,  left:true,  right:false },
-    { r:4, c:1, top:false, bottom:true,  left:false, right:true  },
-    { r:4, c:2, top:true,  bottom:true,  left:true,  right:false },
-    { r:4, c:3, top:false, bottom:true,  left:false, right:false },
-    { r:4, c:4, top:false, bottom:true,  left:false, right:true  }
+    { r:3, c:2, top:false, bottom:false, left:false, right:true },
+    { r:3, c:3, top:false, bottom:true,  left:true,  right:false },
+    { r:3, c:4, top:true,  bottom:false, left:false, right:false },
+
+    { r:4, c:0, top:false, bottom:false, left:false, right:false },
+    { r:4, c:1, top:false, bottom:false, left:false, right:true },
+    { r:4, c:2, top:false, bottom:false, left:true,  right:false },
+    { r:4, c:3, top:true,  bottom:false, left:false, right:true },
+    { r:4, c:4, top:false, bottom:false, left:true,  right:false }
 ];
 
-let groomGrid = { r: 0, c: 0 }; // يبدأ أعلى اليسار بالظبط
-let brideGrid = { r: 4, c: 4 }; // العروسة أسفل اليمين بالظبط
+let groomGrid = { r: 0, c: 0 }; 
+let brideGrid = { r: 4, c: 4 }; 
 
 const board = document.getElementById('maze-board');
+board.innerHTML = ""; 
 
-// بناء الخلايا وحوائطها المضيئة ديناميكياً
+// بناء المربعات وحقن حوائطها
 mazeData.forEach(cell => {
     const cellEl = document.createElement('div');
     cellEl.className = 'cell';
@@ -59,12 +59,11 @@ mazeData.forEach(cell => {
     if (cell.left) cellEl.classList.add('w-left');
     if (cell.right) cellEl.classList.add('w-right');
     
-    cellEl.setAttribute('data-r', cell.r);
-    cellEl.setAttribute('data-c', cell.c);
+    cellEl.setAttribute('id', `cell-${cell.r}-${cell.c}`);
     board.appendChild(cellEl);
 });
 
-// حقن العريس والعروسة داخل الـ DOM
+// إنشاء العناصر
 const groomEl = document.createElement('div');
 groomEl.id = 'groom';
 groomEl.className = 'player-inside groom-img';
@@ -74,41 +73,40 @@ brideEl.id = 'bride';
 brideEl.className = 'target-inside bride-img';
 
 function renderPlayers() {
-    // جلب المربعات الحالية ووضع الصور جواها
-    const groomTargetCell = document.querySelector(`[data-r='${groomGrid.r}'][data-c='${groomGrid.c}']`);
-    const brideTargetCell = document.querySelector(`[data-r='${brideGrid.r}'][data-c='${brideGrid.c}']`);
+    const groomCell = document.getElementById(`cell-${groomGrid.r}-${groomGrid.c}`);
+    const brideCell = document.getElementById(`cell-${brideGrid.r}-${brideGrid.c}`);
     
-    if(groomTargetCell) groomTargetCell.appendChild(groomEl);
-    if(brideTargetCell) brideTargetCell.appendChild(brideEl);
+    if(groomCell) groomCell.appendChild(groomEl);
+    if(brideCell) brideCell.appendChild(brideEl);
 }
 renderPlayers();
 
-// فحص قفل الحوائط الحسابي الصارم لمنع اختراق الحوائط
+// فحص الحوائط المعتمد على حدود المربعات الحقيقية (مستحيل يخترق)
 function moveGroom(dir) {
     const currentCell = mazeData.find(cell => cell.r === groomGrid.r && cell.c === groomGrid.c);
     
     if (dir === 'up') {
-        if (currentCell.top || groomGrid.r === 0) return; // حيطة سد
+        if (groomGrid.r === 0 || currentCell.top) return;
         const nextCell = mazeData.find(cell => cell.r === groomGrid.r - 1 && cell.c === groomGrid.c);
-        if (nextCell.bottom) return; 
+        if (nextCell && nextCell.bottom) return;
         groomGrid.r--;
     }
     if (dir === 'down') {
-        if (currentCell.bottom || groomGrid.r === 4) return; // حيطة سد
+        if (groomGrid.r === 4 || currentCell.bottom) return;
         const nextCell = mazeData.find(cell => cell.r === groomGrid.r + 1 && cell.c === groomGrid.c);
-        if (nextCell.top) return;
+        if (nextCell && nextCell.top) return;
         groomGrid.r++;
     }
     if (dir === 'left') {
-        if (currentCell.left || groomGrid.c === 0) return; // حيطة سد
+        if (groomGrid.c === 0 || currentCell.left) return;
         const nextCell = mazeData.find(cell => cell.r === groomGrid.r && cell.c === groomGrid.c - 1);
-        if (nextCell.right) return;
+        if (nextCell && nextCell.right) return;
         groomGrid.c--;
     }
     if (dir === 'right') {
-        if (currentCell.right || groomGrid.c === 4) return; // حيطة سد
+        if (groomGrid.c === 4 || currentCell.right) return;
         const nextCell = mazeData.find(cell => cell.r === groomGrid.r && cell.c === groomGrid.c + 1);
-        if (nextCell.left) return;
+        if (nextCell && nextCell.left) return;
         groomGrid.c++;
     }
 
@@ -116,7 +114,6 @@ function moveGroom(dir) {
     checkWin();
 }
 
-// الكيبورد شغال علطول مع الأسهم و W,A,S,D
 window.addEventListener('keydown', (e) => {
     if(document.getElementById('screen2').style.display === 'block') {
         if(e.key === 'ArrowUp' || e.key === 'w') moveGroom('up');

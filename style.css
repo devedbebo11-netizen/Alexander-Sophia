@@ -38,7 +38,7 @@ body {
 .letter-card h2 { font-family: 'Great Vibes', cursive; color: #152540; font-size: 2rem; }
 .next-screen-btn { background: var(--bg-dark); border: none; color: white; padding: 6px 12px; font-size: 0.7rem; cursor: pointer; margin-top: 15px; }
 
-/* --- محتوى الدعوة --- */
+/* --- الشاشة الثانية --- */
 #screen2 { display: none; padding: 40px 20px; }
 .container { max-width: 450px; margin: 0 auto; text-align: center; }
 .top-tag { font-size: 0.7rem; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 10px; }
@@ -49,71 +49,62 @@ body {
 .hero-img-container { width: 100%; border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
 .hero-img-container img { width: 100%; display: block; }
 
-/* نصوص المتاهة المأخوذة من لقطة الشاشة */
 .maze-title-text { font-size: 0.65rem; letter-spacing: 3px; color: var(--gold); margin-top: 25px; }
 .maze-subtitle-text { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; margin: 5px 0; letter-spacing: 1px; }
 .maze-desc-text { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; }
 
-/* بار صور العرسان */
-.maze-header-avatars { display: flex; justify-content: space-around; align-items: center; max-width: 280px; margin: 0 auto; }
+.maze-header-avatars { display: flex; justify-content: space-around; align-items: center; max-width: 280px; margin: 0 auto 15px auto; }
 .avatar-info { display: flex; flex-direction: column; align-items: center; gap: 5px; }
 .avatar-info span { font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); font-weight: 600; }
-.header-circle { width: 42px; height: 42px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 8px rgba(255,255,255,0.2); }
+.header-circle { width: 42px; height: 42px; border-radius: 50%; border: 2px solid white; }
 .heart-connect { display: flex; align-items: center; gap: 8px; color: var(--heart); font-size: 0.7rem; }
 
-/* صور بنترست السريعة المستقرة أونلاين */
 .groom-img { background-image: url("https://images.unsplash.com/photo-1594744803329-e58b31de215f?q=80&w=150"); background-size: cover; background-position: center; }
 .bride-img { background-image: url("https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=150"); background-size: cover; background-position: center; }
 
-/* بناء بوكس المتاهة بنظام الـ Grid الحقيقي لمنع العبور العشوائي */
+/* صندوق المتاهة وبنائه بالبكسل الصارم */
 .maze-section { position: relative; background: #0f1a2e; padding: 20px; border-radius: 16px; max-width: 290px; margin: 0 auto 40px auto; border: 1px solid rgba(255,255,255,0.05); }
+
 .maze-grid {
     display: grid;
     grid-template-columns: repeat(5, 48px);
     grid-template-rows: repeat(5, 48px);
     width: 240px; height: 240px; margin: 0 auto;
-    position: relative; background: transparent;
+    position: relative; background: #111d33;
+    border: 3px solid var(--maze-line-color);
 }
 
-/* المربعات والأسوار المضيئة بالكامل */
+/* المربعات الفردية والحدود المضيئة الزرقاء */
 .cell {
     position: relative; width: 48px; height: 48px; box-sizing: border-box;
 }
-/* تنسيق جدران المتاهة المضيئة زرقاء رفيعة نفس لقطة الشاشة */
-.w-top { border-top: 2.5px solid var(--maze-line-color); }
-.w-bottom { border-bottom: 2.5px solid var(--maze-line-color); }
-.w-left { border-left: 2.5px solid var(--maze-line-color); }
-.w-right { border-right: 2.5px solid var(--maze-line-color); }
+.w-top { border-top: 3.5px solid var(--maze-line-color); }
+.w-bottom { border-bottom: 3.5px solid var(--maze-line-color); }
+.w-left { border-left: 3.5px solid var(--maze-line-color); }
+.w-right { border-right: 3.5px solid var(--maze-line-color); }
 
-/* تصميم العرايس داخل شبكة اللعبة الدائرية */
+/* ضبط مقاس العرسان ليتحركوا بنعومة بالملي جوة الشبكة */
 .player-inside, .target-inside {
-    position: absolute; width: 34px; height: 34px; border-radius: 50%;
-    border: 2px solid white; top: 7px; left: 7px; z-index: 10;
-    transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    position: absolute; width: 36px; height: 36px; border-radius: 50%;
+    border: 2px solid white; top: 4px; left: 4px; z-index: 10;
+    box-shadow: 0 0 8px rgba(255,255,255,0.4);
 }
 
-/* الأزرار الدائرية الزرقاء المتطابقة مع الصورة بالملي */
+/* أزرار التحكم الدائرية الزرقاء */
 .controls { display: grid; grid-template-columns: repeat(3, 44px); gap: 10px; justify-content: center; margin-top: 25px; }
 .btn-dir { height: 44px; background: #284473; border: none; color: white; font-size: 1.1rem; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 .btn-dir:active { background: white; color: #121f38; }
 .dpad-center { display: flex; justify-content: center; align-items: center; color: var(--heart); font-size: 0.9rem; }
 
-/* شاشة الفوز المنبثقة فوق المتاهة لمنع الرؤية */
+/* شاشة الفوز المنبثقة المحكمة */
 .success-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 26, 46, 0.97); border-radius: 16px; justify-content: center; align-items: center; z-index: 100; }
 .success-card h3 { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; margin-bottom: 15px; }
 .heart-icon-wrap { font-size: 2rem; color: var(--heart); margin-bottom: 10px; }
 .continue-btn { background: white; color: #0f1a2e; border: none; padding: 10px 20px; font-weight: 600; font-size: 0.75rem; cursor: pointer; border-radius: 4px; }
 
-/* إخفاء المحتوى السفلي تماماً بقفل برمجي صلب ومحكم */
-.hidden-content-block {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.8s ease;
-    margin-top: 40px;
-}
+/* قفل المحتويات السفلية بالكامل وعزلها برمجياً */
+.hidden-content-block { display: none; opacity: 0; transition: opacity 0.8s ease; margin-top: 40px; }
 
-/* بقية عناصر الدعوة */
 .section-divider-text { color: var(--gold); margin: 35px 0 10px; font-size: 0.75rem; letter-spacing: 2px; font-weight: 600; }
 .invited-header { font-family: 'Cinzel Decorative', serif; font-size: 1.3rem; margin-bottom: 20px; color: var(--gold); }
 .detail-row { margin: 12px 0; font-size: 0.9rem; color: white; }
